@@ -47,12 +47,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - exercisegifs/arm1.gif
-     - exercisegifs/arm2.gif
-     - exercisegifs/leg1.gif
-     - exercisegifs/leg2.gif
-     - exercisegifs/hip1.gif
-     - exercisegifs/hip2.gif
+     - assets/icons/
+     - assets/exercisegifs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -77,5 +73,4 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # For details regarding fonts from package dependenci

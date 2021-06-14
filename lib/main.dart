@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './workout.dart';
+import './exerciseSelections.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,17 +12,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List availEx = ["arms", "legs", "hips"];
-
   @override
   //function that returns a widget to be drawn
   Widget build(BuildContext context) {
-    //MaterialApp widget returned
     return MaterialApp(
-      //scaffold used to get the basic app styling
+      title: "Xihao God Life",
       home: Scaffold(
-        body: Center(
-          child: Workout(availEx),
+        body: const Center(
+          child: ExerciseSelections(),
         ),
       ),
     );

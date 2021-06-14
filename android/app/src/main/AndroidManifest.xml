@@ -1,8 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.elderlyapp">
-   <application
-        android:label="elderlyapp"
+    package="com.example.google_maps_in_flutter">
+    <application
+        android:label="google_maps_in_flutter"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- TODO: Add your API key here -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCuGKyDd3m0DfYpYjyyz5VO1oh6PllpA8s"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

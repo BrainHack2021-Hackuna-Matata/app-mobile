@@ -2,38 +2,34 @@ import 'package:flutter/material.dart';
 import './timer.dart';
 
 class Workout extends StatelessWidget {
-  final List availEx;
-
-  Workout(this.availEx);
-
   final gifsmap = {
     "arm": [
       {
-        "file": "exercisegifs/arm1.gif",
+        "file": "assets/exercisegifs/arm1.gif",
         "name": "Arm Rotation",
       },
       {
-        "file": "exercisegifs/arm2.gif",
+        "file": "assets/exercisegifs/arm2.gif",
         "name": "Arm Flex",
       },
     ],
     "leg": [
       {
-        "file": "exercisegifs/leg1.gif",
+        "file": "assets/exercisegifs/leg1.gif",
         "name": "Leg Rotation",
       },
       {
-        "file": "exercisegifs/leg2.gif",
+        "file": "assets/exercisegifs/leg2.gif",
         "name": "Leg Flex",
       },
     ],
     "hip": [
       {
-        "file": "exercisegifs/hip1.gif",
+        "file": "assets/exercisegifs/hip1.gif",
         "name": "Hip Rotation",
       },
       {
-        "file": "exercisegifs/hip2.gif",
+        "file": "assets/exercisegifs/hip2.gif",
         "name": "Hip Flex",
       },
     ],
