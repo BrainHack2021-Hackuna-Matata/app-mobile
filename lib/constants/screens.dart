@@ -1,5 +1,6 @@
 class ScreenRoutes {
   static final List<String> _screens = [
+    "/",
     "/meet",
     "/purchase",
     "/exercise",

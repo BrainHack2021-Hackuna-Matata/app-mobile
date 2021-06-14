@@ -1,3 +1,4 @@
+import 'package:eldertly_app/components/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
@@ -93,6 +94,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     }
 
     return Scaffold(
+      bottomNavigationBar: MyAppBar(),
       // show exercise and timer if within index
       body: _exIndex < widget.exList.length
           ? Container(

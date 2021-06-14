@@ -6,10 +6,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MyAppBar(),
       body: Container(
-        child: Text("ElderlyApp"),
+        height: double.infinity,
+        width: double.infinity,
+        child: Text(
+          "Home Screen Here",
+          style: TextStyle(color: Colors.red),
+          textAlign: TextAlign.center,
+        ),
       ),
-      bottomNavigationBar: MyAppBar.get(),
     );
   }
 }
