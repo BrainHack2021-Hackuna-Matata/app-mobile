@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './exerciseSelections.dart';
+import './workout.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,9 @@ class _MyAppState extends State<MyApp> {
           child: ExerciseSelections(),
         ),
       ),
+      routes: {
+        Workout.routeName: (ctx) => Workout(),
+      },
     );
   }
 }

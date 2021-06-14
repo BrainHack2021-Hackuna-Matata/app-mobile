@@ -36,6 +36,15 @@ class _ExerciseSelectionsState extends State<ExerciseSelections> {
     return count;
   }
 
+  //OnPressed Function to navigate
+  void selectExerciseHandler(arms, legs, hips) {
+    Navigator.of(context).pushNamed(Workout.routeName, arguments: {
+      'arms': arms,
+      'legs': legs,
+      'hips': hips,
+    });
+  }
+
   /// This is the stateful widget that the main application instantiates.
 
   @override
@@ -130,7 +139,8 @@ class _ExerciseSelectionsState extends State<ExerciseSelections> {
                 textStyle:
                     TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
             onPressed: _selectedExercises
-                ? () {} // What happens after start exercise
+                ? () => selectExerciseHandler(
+                    _arms, _legs, _hips) // What happens after start exercise
                 : null,
             child: _selectedExercises
                 ? const Text('Start Exercise!')

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './timer.dart';
 
 class Workout extends StatelessWidget {
+  static const routeName = '/workout';
   final gifsmap = {
     "arm": [
       {
@@ -37,6 +38,11 @@ class Workout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final arms = routeArgs['arms'];
+    final legs = routeArgs['legs'];
+    final hips = routeArgs['hips'];
     //MaterialApp widget returned
     return Container(
       width: double.infinity,
