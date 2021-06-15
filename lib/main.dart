@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import './components/notifier.dart';
 import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
-import 'screens/homeScreen.dart';
+import 'screens/tabScreen.dart';
 import 'screens/meetupScreen/meetupListScreen.dart';
 
 void main() {
@@ -32,11 +32,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: widget._title,
       theme: ThemeData(primarySwatch: Colors.amber),
-      home: HomeScreen(),
+      home: TabScreen(),
       initialRoute: "/",
       routes: {
         "/meet": (context) => MeetupListScreen(),
-        "/purchase": (context) => HomeScreen(),
+        "/purchase": (context) => TabScreen(),
         "/exercise": (context) => ExerciseSelectionsScreen(),
       },
     );
