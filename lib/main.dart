@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './components/notifier.dart';
-<<<<<<< HEAD
-import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
-import 'screens/tabScreen.dart';
-import 'screens/meetupScreen/meetupListScreen.dart';
-import 'screens/purchaseScreen/purchaseSplash.dart';
-=======
 import './screens/exerciseScreen/exerciseSelectionsScreen.dart';
 import './screens/authScreen/authScreen.dart';
 import './screens/authScreen/registerScreen.dart';
@@ -15,7 +9,6 @@ import './screens/meetupScreen/meetupListScreen.dart';
 import './screens/purchasescreen/purchaseSplash.dart';
 import './screens/tabScreen.dart';
 
->>>>>>> master
 
 void main() {
   runApp(

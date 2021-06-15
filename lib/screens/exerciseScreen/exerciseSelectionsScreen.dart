@@ -90,32 +90,6 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-<<<<<<< HEAD
-            ExerciseOption("arm", _arms, () {
-              setState(() {
-                _arms = _arms ? false : true;
-              });
-            }),
-            ExerciseOption("hip", _hips, () {
-              setState(() {
-                _hips = _hips ? false : true;
-              });
-            }),
-            ExerciseOption("leg", _legs, () {
-              setState(() {
-                _legs = _legs ? false : true;
-              });
-            }),
-
-            //print time taken for exercises
-            Text(
-              'Estimated Exercise Time:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
-            ),
-=======
             Expanded(
               child: FittedBox(
                 fit: BoxFit.contain,
@@ -173,7 +147,6 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
                     )
                   : null,
             ),
->>>>>>> master
             Text(
               exerciseTimes[selectedCount],
               style: TextStyle(

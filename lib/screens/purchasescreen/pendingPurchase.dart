@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
-class MapMoreInfo extends StatelessWidget {
+class PendingPurchase extends StatelessWidget {
   final String markerID;
   final double lat;
   final double lng;
@@ -13,7 +13,7 @@ class MapMoreInfo extends StatelessWidget {
   final String image;
   final String details;
 
-  MapMoreInfo({
+  PendingPurchase({
     required this.markerID,
     required this.lat,
     required this.lng,

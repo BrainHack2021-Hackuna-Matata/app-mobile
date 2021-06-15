@@ -61,11 +61,14 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
      }
 
     return new Scaffold(
+      appBar: AppBar(
+        title: Text("Group Buy Requests"),
+      ),
       body: Column(children: <Widget>[
       Stack(
         children:<Widget>[
       Container(child: GoogleMap(
-        mapType: MapType.hybrid,
+        mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
@@ -73,44 +76,60 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
         markers:markers,
         mapToolbarEnabled: false,
       ),
-      constraints: BoxConstraints.tightFor(height : MediaQuery.of(context).size.height*0.7 ),)
+      constraints: BoxConstraints.tightFor(height : MediaQuery.of(context).size.height*0.6 ),)
         ]),
       Spacer(),
       (selectedMarkerName == "No Location Selected")
       ?  Text(selectedMarkerName, style: TextStyle(
-              fontSize: 36,))
+              fontSize: 24,))
       : Text("BLK " + selectedMarkerName, style: TextStyle(
-              fontSize: 36,)),      
+              fontSize: 24,)),      
       (selectedMarkerHelp == "Groceries Needed")
       ? groceryJellybean
       : (selectedMarkerHelp == "Meal Needed")
       ? mealJellybean
       : SizedBox(height: 1),
       Text(selectedMarkerTime, style: TextStyle(
-              fontSize: 36,)),
+              fontSize: 24,)),
+       Row(
+         mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+         children: [
+           ElevatedButton(
+                style: ElevatedButton.styleFrom( primary: Colors.blue,
+           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                onPressed: (selectedMarkerName == "No Location Selected")
+                ? null
+                : (){Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MapMoreInfo(
+                  markerID: markerData[selectedMarkerIndex][0],
+                  lat: markerData[selectedMarkerIndex][1] ,
+                  lng: markerData[selectedMarkerIndex][2],
+                  blkNum: markerData[selectedMarkerIndex][3] ,
+                  helpNeeded: markerData[selectedMarkerIndex][4],
+                  dueDate: markerData[selectedMarkerIndex][5] ,
+                  name: markerData[selectedMarkerIndex][6],
+                  unit: markerData[selectedMarkerIndex][7],
+                  image: markerData[selectedMarkerIndex][8] ,
+                  details: markerData[selectedMarkerIndex][9],
+                )));
+                },
+                child: (selectedMarkerName == "No Location Selected")
+                ? const Text('N/A')
+                : const Text('More Info')
+    ), 
+        SizedBox(width: 15),
        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-      primary: Colors.green, padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-            onPressed: (selectedMarkerName == "No Location Selected")
-            ? null
-            : (){Navigator.push(context,
-            MaterialPageRoute(builder: (context) => MapMoreInfo(
-              markerID: markerData[selectedMarkerIndex][0],
-              lat: markerData[selectedMarkerIndex][1] ,
-              lng: markerData[selectedMarkerIndex][2],
-              blkNum: markerData[selectedMarkerIndex][3] ,
-              helpNeeded: markerData[selectedMarkerIndex][4],
-              dueDate: markerData[selectedMarkerIndex][5] ,
-              name: markerData[selectedMarkerIndex][6],
-              unit: markerData[selectedMarkerIndex][7],
-              image: markerData[selectedMarkerIndex][8] ,
-              details: markerData[selectedMarkerIndex][9],
-            )));
-            },
-            child: (selectedMarkerName == "No Location Selected")
-            ? const Text('N/A')
-            : const Text('More Info')
-    ),
+                style: ElevatedButton.styleFrom(
+           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                onPressed: (selectedMarkerName == "No Location Selected")
+                ? null
+                : (){},
+                child: (selectedMarkerName == "No Location Selected")
+                ? const Text('N/A')
+                : const Text('Accept')
+    ), 
+         ],
+       ),
     SizedBox(height: 20),
     ]));
   }

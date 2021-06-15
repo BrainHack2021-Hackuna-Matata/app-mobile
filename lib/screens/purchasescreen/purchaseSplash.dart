@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './mapScreen.dart';
+import './addPurchaseScreen.dart';
+import './checkActiveListing.dart';
+import './pendingPurchase.dart';
 
 class PurchaseSplash extends StatefulWidget {
   @override
@@ -19,6 +22,11 @@ class PurchaseSplashState extends State<PurchaseSplash> {
             style: ElevatedButton.styleFrom(
       primary: Colors.lightBlue, padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             onPressed: (){
+              CheckActiveListing()
+            ? (){} ///TODO finish pending purchase
+            : Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AddPurchaseScreen()),
+            );
             },
             child: const Text("I need help buying things\n我需要帮忙买东西\nSaya memerlukan pertolongan untuk membeli barangn\nபொருட்களை வாங்க எனக்கு உதவி தேவை", textAlign : TextAlign.right),
       ),

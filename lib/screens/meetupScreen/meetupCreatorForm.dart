@@ -59,9 +59,10 @@ class _MyFormState extends State<MeetupCreatorForm> {
     if (formState!.validate()) {
       formState.save();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
+      widget._submitForm(formData);
     }
     // Submit form API call
-    widget._submitForm(formData);
+    
     // print(formData);
   }
 
