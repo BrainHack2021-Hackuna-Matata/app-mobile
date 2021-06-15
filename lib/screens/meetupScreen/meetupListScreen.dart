@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'card/meetupCard.dart';
+import 'addMeetupScreen.dart';
 import '../../fakemeetups.dart';
 
 class MeetupListScreen extends StatefulWidget {
@@ -16,7 +17,9 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
     setState(() {});
   }
 
-  void handleAdd() {}
+  void handleAdd() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +37,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
             location: meetups[index].location,
             capacity: meetups[index].capacity,
             currentpax: meetups[index].coming.length,
+            attendees: meetups[index].coming,
           );
         },
         itemCount: meetups.length,

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './components/notifier.dart';
-import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
-import 'screens/tabScreen.dart';
-import 'screens/authScreen/registerScreen.dart';
-import 'screens/meetupScreen/meetupListScreen.dart';
+import './screens/tabScreen.dart';
+import './screens/exerciseScreen/exerciseSelectionsScreen.dart';
+import './screens/authScreen/authScreen.dart';
+import './screens/authScreen/registerScreen.dart';
+import './screens/meetupScreen/meetupListScreen.dart';
 
 //temp
-import './screens/authScreen/authScreen.dart';
 
 void main() {
   runApp(

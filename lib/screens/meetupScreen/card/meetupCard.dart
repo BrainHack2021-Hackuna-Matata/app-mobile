@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './../meetupDetailsScreen.dart';
+
 class MeetupCard extends StatelessWidget {
   final int id;
   final String title;
@@ -7,6 +9,7 @@ class MeetupCard extends StatelessWidget {
   final String location;
   final int capacity;
   final int currentpax;
+  final List attendees;
   MeetupCard({
     required this.id,
     required this.title,
@@ -14,10 +17,22 @@ class MeetupCard extends StatelessWidget {
     required this.location,
     required this.capacity,
     required this.currentpax,
+    required this.attendees,
   });
 
   void tapCard(BuildContext context) {
-    //TODO : Push to meetup detail screen
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MeetupDetailsScreen(
+          title: title,
+          imageurl: imageurl,
+          location: location,
+          capacity: capacity,
+          currentpax: currentpax,
+          attendees: attendees,
+        ),
+      ),
+    );
   }
 
   @override
