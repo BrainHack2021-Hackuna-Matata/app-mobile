@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../components/navigationBar.dart';
-
 class MeetupListScreen extends StatefulWidget {
   const MeetupListScreen({Key? key}) : super(key: key);
 
@@ -21,7 +19,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
     //   ),
     // );
     return Scaffold(
-      bottomNavigationBar: MyAppBar(),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

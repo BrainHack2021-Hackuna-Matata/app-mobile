@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import './workoutScreen.dart';
-import '../../components/navigationBar.dart';
 
 class ExerciseSelectionsScreen extends StatefulWidget {
   const ExerciseSelectionsScreen({Key? key}) : super(key: key);
 
   @override
-  State<ExerciseSelectionsScreen> createState() => _ExerciseSelectionsScreenState();
+  State<ExerciseSelectionsScreen> createState() =>
+      _ExerciseSelectionsScreenState();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
@@ -16,7 +16,12 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
   bool _legs = false;
   bool _hips = false;
   bool _selectedExercises = false;
-  var exerciseTimes = ["No Exercises Selected", "5 Minutes", "10 Minutes", "15 Minutes"];
+  var exerciseTimes = [
+    "No Exercises Selected",
+    "5 Minutes",
+    "10 Minutes",
+    "15 Minutes"
+  ];
   int selectedCount = 0;
 
   countSelectedExercises() {
@@ -69,7 +74,8 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
 
     print(compileEx);
 
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExerciseScreen(compileEx)));
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => ExerciseScreen(compileEx)));
   }
 
   /// This is the stateful widget that the main application instantiates.
@@ -77,7 +83,6 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MyAppBar(),
       body: Column(
         children: <Widget>[
           ExerciseOption("arm", _arms, () {
@@ -200,7 +205,8 @@ class ExerciseOption extends StatelessWidget {
               backgroundBlendMode: BlendMode.saturation,
             ),
       child: IconButton(
-        icon: Image.asset("assets/icons/${_isActive ? _imageName : '${_imageName}-off'}.png"),
+        icon: Image.asset(
+            "assets/icons/${_isActive ? _imageName : '${_imageName}-off'}.png"),
         iconSize: 100,
         onPressed: onPress,
       ),
