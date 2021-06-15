@@ -15,7 +15,8 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
   bool _arms = false;
   bool _legs = false;
   bool _hips = false;
-  bool _selectedExercises = false;
+  late bool _ExercisesSelected;
+
   var exerciseTimes = [
     "No Exercises Selected",
     "5 Minutes",
@@ -72,8 +73,6 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
       }
     }
 
-    print(compileEx);
-
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => ExerciseScreen(compileEx)));
   }
@@ -82,25 +81,97 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _ExercisesSelected = _arms || _legs || _hips;
+
+    selectedCount = countSelectedExercises();
+
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          ExerciseOption("arm", _arms, () {
-            setState(() {
-              _arms = _arms ? false : true;
-            });
-          }),
-          ExerciseOption("hip", _hips, () {
-            setState(() {
-              _hips = _hips ? false : true;
-            });
-          }),
-          ExerciseOption("leg", _legs, () {
-            setState(() {
-              _legs = _legs ? false : true;
-            });
-          }),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ExerciseOption(
+                  "arm",
+                  _arms,
+                  () {
+                    setState(() {
+                      _arms = _arms ? false : true;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ExerciseOption(
+                  "hip",
+                  _hips,
+                  () {
+                    setState(() {
+                      _hips = _hips ? false : true;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ExerciseOption(
+                  "leg",
+                  _legs,
+                  () {
+                    setState(() {
+                      _legs = _legs ? false : true;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+            //print time taken for exercises
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: _ExercisesSelected
+                  ? Text(
+                      'Estimated Exercise Time:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    )
+                  : null,
+            ),
+            Text(
+              exerciseTimes[selectedCount],
+              style: TextStyle(
+                fontSize: 25,
+              ),
+            ),
+
+            //start button
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: ElevatedButton(
+                onPressed: _ExercisesSelected
+                    ? () => selectExerciseHandler(_arms, _legs, _hips)
+                    : null,
+                child: Text('START'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightGreen,
+                  textStyle: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       // body: SafeArea (
       //   child: Column(
