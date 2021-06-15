@@ -94,6 +94,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Workout"),
+      ),
       bottomNavigationBar: MyAppBar(),
       // show exercise and timer if within index
       body: _exIndex < widget.exList.length
