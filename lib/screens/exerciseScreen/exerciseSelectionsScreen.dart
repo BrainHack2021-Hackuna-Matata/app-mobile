@@ -90,29 +90,62 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ExerciseOption("arm", _arms, () {
-              setState(() {
-                _arms = _arms ? false : true;
-              });
-            }),
-            ExerciseOption("hip", _hips, () {
-              setState(() {
-                _hips = _hips ? false : true;
-              });
-            }),
-            ExerciseOption("leg", _legs, () {
-              setState(() {
-                _legs = _legs ? false : true;
-              });
-            }),
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ExerciseOption(
+                  "arm",
+                  _arms,
+                  () {
+                    setState(() {
+                      _arms = _arms ? false : true;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ExerciseOption(
+                  "hip",
+                  _hips,
+                  () {
+                    setState(() {
+                      _hips = _hips ? false : true;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ExerciseOption(
+                  "leg",
+                  _legs,
+                  () {
+                    setState(() {
+                      _legs = _legs ? false : true;
+                    });
+                  },
+                ),
+              ),
+            ),
 
             //print time taken for exercises
-            Text(
-              'Estimated Exercise Time:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: _ExercisesSelected
+                  ? Text(
+                      'Estimated Exercise Time:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    )
+                  : null,
             ),
             Text(
               exerciseTimes[selectedCount],
