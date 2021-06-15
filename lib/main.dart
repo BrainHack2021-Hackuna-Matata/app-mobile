@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './components/notifier.dart';
-import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
 import 'screens/tabScreen.dart';
-import 'screens/meetupScreen/meetupListScreen.dart';
 
 void main() {
   runApp(
