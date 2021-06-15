@@ -7,7 +7,7 @@ const FAKE_MEETUPS = const [
     id: 1,
     title: 'Chess',
     description: 'unused',
-    location: '654321',
+    location: '654423',
     capacity: 2,
     imageurl: 'assets/locations_meetup/chess.jpeg',
     coming: [
@@ -32,7 +32,7 @@ const FAKE_MEETUPS = const [
     id: 3,
     title: 'Mahjong',
     description: 'unused',
-    location: '654321',
+    location: '654001',
     capacity: 4,
     imageurl: 'assets/locations_meetup/mahjong.jpeg',
     coming: [
@@ -46,7 +46,7 @@ const FAKE_MEETUPS = const [
     id: 4,
     title: 'Mahjong',
     description: 'unused',
-    location: '654321',
+    location: '654021',
     capacity: 4,
     imageurl: 'assets/locations_meetup/mahjong.jpeg',
     coming: [
