@@ -37,7 +37,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: widget._title,
       theme: ThemeData(primarySwatch: Colors.amber),
-      home: AuthScreen(),
+      // home: AuthScreen(),
+      home: TabScreen(),
       initialRoute: "/",
       routes: {
         "/meet": (context) => MeetupListScreen(),
