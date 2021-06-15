@@ -8,6 +8,7 @@ import './homeScreen/homeScreen.dart';
 import '../components/notifier.dart';
 
 class TabScreen extends StatefulWidget {
+  static const routeName = '/tabscreen';
   @override
   _TabScreenState createState() => _TabScreenState();
 }
