@@ -30,6 +30,7 @@ class MeetupCard extends StatelessWidget {
           capacity: capacity,
           currentpax: currentpax,
           attendees: attendees,
+          id: id,
         ),
       ),
     );
