@@ -6,7 +6,7 @@ import './meetupScreen/meetupListScreen.dart';
 import './exerciseScreen/exerciseSelectionsScreen.dart';
 import './homeScreen/homeScreen.dart';
 import '../components/notifier.dart';
-import './purchaseScreen/purchaseScreen.dart';
+import './purchaseScreen/purchaseSplash.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _TabScreenState extends State<TabScreen> {
     _pages = [
       HomeScreen(),
       MeetupListScreen(),
-      MapScreen(),
+      PurchaseSplash(),
       ExerciseSelectionsScreen(),
     ];
     super.initState();

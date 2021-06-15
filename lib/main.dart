@@ -5,7 +5,7 @@ import './components/notifier.dart';
 import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
 import 'screens/tabScreen.dart';
 import 'screens/meetupScreen/meetupListScreen.dart';
-import 'screens/purchaseScreen/purchaseScreen.dart';
+import 'screens/purchaseScreen/purchaseSplash.dart';
 
 void main() {
   runApp(
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "/",
       routes: {
         "/meet": (context) => MeetupListScreen(),
-        "/purchase": (context) => MapScreen(),
+        "/purchase": (context) => PurchaseSplash(),
         "/exercise": (context) => ExerciseSelectionsScreen(),
       },
     );
