@@ -50,9 +50,9 @@ const FAKE_MEETUPS = const [
     capacity: 4,
     imageurl: 'assets/locations_meetup/mahjong.jpeg',
     coming: [
-      'Bob',
-      'Ali',
-      'Cock',
+      'Bobob Bob Bob Bob',
+      'Ali Ali Ali Ali Ali Ali Ali',
+      'Cock Cock CoCk COck COck Cok',
     ],
     owner: 1,
   ),

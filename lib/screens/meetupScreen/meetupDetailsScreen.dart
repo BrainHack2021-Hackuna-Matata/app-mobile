@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MeetupDetailsScreen extends StatelessWidget {
+class MeetupDetailsScreen extends StatefulWidget {
   final String title;
   final String imageurl;
   final String location;
   final int capacity;
   final int currentpax;
   final List attendees;
+  final int id;
 
   MeetupDetailsScreen({
     required this.title,
@@ -15,24 +16,38 @@ class MeetupDetailsScreen extends StatelessWidget {
     required this.capacity,
     required this.currentpax,
     required this.attendees,
+    required this.id,
   });
 
-  void selectExerciseHandler() {
+  @override
+  _MeetupDetailsScreenState createState() => _MeetupDetailsScreenState();
+}
+
+class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
+  void selectExerciseHandler(
+      {required int id, required int currentpax, required List attendees}) {
     //TODO pop dialogue screen to confirm and send it to
+    //Call api to update participants and current pax
   }
 
   @override
   Widget build(BuildContext context) {
-    int blkNum = int.parse(location.substring(3));
+    int blkNum = int.parse(widget.location.substring(3));
+    String registered =
+        widget.currentpax.toString() + "/" + widget.capacity.toString();
 
     String attendeesName = "";
 
-    for (int i = 0; i < attendees.length - 1; i++) {
-      attendeesName += attendees[i];
+    for (int i = 0; i < widget.attendees.length - 1; i++) {
+      attendeesName += widget.attendees[i];
       attendeesName += ", ";
     }
-    attendeesName += attendees[attendees.length - 1];
+    attendeesName += widget.attendees[widget.attendees.length - 1];
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Meetup Details"),
+      ),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -42,14 +57,14 @@ class MeetupDetailsScreen extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(imageurl),
+                  image: AssetImage(widget.imageurl),
                   fit: BoxFit.fitWidth,
                 ),
               ),
             ),
             Container(
               child: Text(
-                title,
+                widget.title,
                 style: TextStyle(
                   fontSize: 36,
                 ),
@@ -79,35 +94,7 @@ class MeetupDetailsScreen extends StatelessWidget {
               ),
               padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
             ),
-
-            // Attending Row
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "Participants: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          attendeesName,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Capacity
+            // Current Pax/Registered
             Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: Row(
@@ -119,38 +106,48 @@ class MeetupDetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "$currentpax/",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: capacity == currentpax
-                                ? Colors.red
-                                : Colors.black,
-                          ),
-                        ),
-                        Text(
-                          "$capacity",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: capacity == currentpax
-                                ? Colors.red
-                                : Colors.black,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    registered,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: widget.capacity == widget.currentpax
+                          ? Colors.red
+                          : Colors.black,
                     ),
+                  )
+                ],
+              ),
+            ),
+            // Names of people attending Row
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Participants: ",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    attendeesName,
+                    style: TextStyle(fontSize: 20),
                   ),
                 ],
               ),
             ),
-            currentpax < capacity
+
+            widget.currentpax < widget.capacity
                 ? Padding(
                     padding: EdgeInsets.all(25),
                     child: ElevatedButton(
-                      onPressed: () => selectExerciseHandler(),
+                      onPressed: () => selectExerciseHandler(
+                          id: widget.id,
+                          attendees: widget.attendees,
+                          currentpax: widget.currentpax),
                       child: Text(
                         "Join Meetup",
                         style: TextStyle(fontSize: 30),
