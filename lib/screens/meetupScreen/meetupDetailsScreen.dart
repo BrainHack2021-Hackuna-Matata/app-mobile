@@ -33,6 +33,9 @@ class MeetupDetailsScreen extends StatelessWidget {
     }
     attendeesName += attendees[attendees.length - 1];
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Details"),
+      ),
       body: Center(
         child: Column(
           children: <Widget>[
