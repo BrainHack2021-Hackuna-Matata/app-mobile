@@ -4,13 +4,18 @@ import 'package:provider/provider.dart';
 import './components/notifier.dart';
 import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
 import 'screens/tabScreen.dart';
+import 'screens/authScreen/registerScreen.dart';
 import 'screens/meetupScreen/meetupListScreen.dart';
+
+//temp
+import './screens/authScreen/authScreen.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => NavigationNotifier()),
+        ChangeNotifierProvider(create: (context) => UserNotifier()),
       ],
       child: MyApp(),
     ),
@@ -32,12 +37,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: widget._title,
       theme: ThemeData(primarySwatch: Colors.amber),
-      home: TabScreen(),
+      home: AuthScreen(),
       initialRoute: "/",
       routes: {
         "/meet": (context) => MeetupListScreen(),
         "/purchase": (context) => TabScreen(),
         "/exercise": (context) => ExerciseSelectionsScreen(),
+        TabScreen.routeName: (context) => TabScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
       },
     );
   }

@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.3 <3.0.0"
 
 dependencies:
+  http: ^0.13.3
   timer_count_down: ^2.1.0+1
   provider: ^5.0.0
   flutter:
