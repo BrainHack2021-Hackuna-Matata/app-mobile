@@ -34,6 +34,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
             location: meetups[index].location,
             capacity: meetups[index].capacity,
             currentpax: meetups[index].coming.length,
+            attendees: meetups[index].coming,
           );
         },
         itemCount: meetups.length,
