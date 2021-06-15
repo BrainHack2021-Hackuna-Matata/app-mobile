@@ -3,6 +3,8 @@
    <application
         android:label="eldertly_app"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCuGKyDd3m0DfYpYjyyz5VO1oh6PllpA8s"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
