@@ -174,12 +174,6 @@ class ExerciseOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      foregroundDecoration: _isActive
-          ? null
-          : BoxDecoration(
-              color: Colors.grey,
-              backgroundBlendMode: BlendMode.saturation,
-            ),
       child: InkWell(
         onTap: onPress,
         child: Container(
