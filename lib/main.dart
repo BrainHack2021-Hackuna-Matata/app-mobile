@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './components/notifier.dart';
-import 'screens/exerciseScreen/exerciseSelectionsScreen.dart';
-import 'screens/tabScreen.dart';
-import 'screens/meetupScreen/meetupListScreen.dart';
+import './screens/exerciseScreen/exerciseSelectionsScreen.dart';
+import './screens/authScreen/authScreen.dart';
+import './screens/authScreen/registerScreen.dart';
+import './screens/meetupScreen/meetupListScreen.dart';
+import './screens/purchasescreen/purchaseSplash.dart';
+import './screens/tabScreen.dart';
+
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => NavigationNotifier()),
+        ChangeNotifierProvider(create: (context) => UserNotifier()),
       ],
       child: MyApp(),
     ),
@@ -32,12 +37,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: widget._title,
       theme: ThemeData(primarySwatch: Colors.amber),
+      // home: AuthScreen(),
       home: TabScreen(),
       initialRoute: "/",
       routes: {
         "/meet": (context) => MeetupListScreen(),
-        "/purchase": (context) => TabScreen(),
+        "/purchase": (context) => PurchaseSplash(),
         "/exercise": (context) => ExerciseSelectionsScreen(),
+        TabScreen.routeName: (context) => TabScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
       },
     );
   }

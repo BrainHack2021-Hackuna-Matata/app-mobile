@@ -6,8 +6,10 @@ import './meetupScreen/meetupListScreen.dart';
 import './exerciseScreen/exerciseSelectionsScreen.dart';
 import './homeScreen/homeScreen.dart';
 import '../components/notifier.dart';
+import './purchaseScreen/purchaseSplash.dart';
 
 class TabScreen extends StatefulWidget {
+  static const routeName = '/tabscreen';
   @override
   _TabScreenState createState() => _TabScreenState();
 }
@@ -19,7 +21,7 @@ class _TabScreenState extends State<TabScreen> {
     _pages = [
       HomeScreen(),
       MeetupListScreen(),
-      HomeScreen(),
+      PurchaseSplash(),
       ExerciseSelectionsScreen(),
     ];
     super.initState();
