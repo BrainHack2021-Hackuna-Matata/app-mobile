@@ -33,12 +33,6 @@ class _MyAppState extends State<MyApp> {
       title: widget._title,
       theme: ThemeData(primarySwatch: Colors.amber),
       home: TabScreen(),
-      initialRoute: "/",
-      routes: {
-        "/meet": (context) => MeetupListScreen(),
-        "/purchase": (context) => TabScreen(),
-        "/exercise": (context) => ExerciseSelectionsScreen(),
-      },
     );
   }
 }
