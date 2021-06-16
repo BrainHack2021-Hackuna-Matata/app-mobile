@@ -1,4 +1,4 @@
-package com.example.eldertly_app
+package com.example.Generation
 
 import io.flutter.embedding.android.FlutterActivity
 

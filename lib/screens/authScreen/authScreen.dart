@@ -31,10 +31,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void clickLogin(UserNotifier user) async {
     if (mobileController.text == '' || passwordController.text == '') {
-      _notext = true;
+      setState(() {_notext = true;});
       return;
     } else if (int.tryParse(mobileController.text) == null || mobileController.text.length != 8) {
-      _wrongformat = true;
+      setState(() {_wrongformat = true;});
       return;
     }
 
@@ -115,7 +115,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Mobile number',
-                    errorText: _wrongformat ? 'Please enter a valid SG number' : null,
+                    errorText: _wrongformat ? 'Please enter a valid SG number (8 numbers)' : null,
                   ),
                 ),
               ),

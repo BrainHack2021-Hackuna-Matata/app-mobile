@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.eldertly_app">
+    package="com.example.Generation">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="eldertly_app"
+        android:label="Generation"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCuGKyDd3m0DfYpYjyyz5VO1oh6PllpA8s"/>

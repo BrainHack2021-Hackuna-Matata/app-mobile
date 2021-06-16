@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:eldertly_app/api/static.dart';
-import 'package:eldertly_app/screens/meetupScreen/meetupCreatorForm.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import './meetupCreatorForm.dart';
+import '../../api/static.dart';
 
 class AddMeetupScreen extends StatefulWidget {
   @override
@@ -11,7 +12,6 @@ class AddMeetupScreen extends StatefulWidget {
 }
 
 class _AddMeetupScreenState extends State<AddMeetupScreen> {
-
   void _submitFormHandler(Map<String, dynamic> form) async {
     String jsonStringForm = jsonEncode(form);
 

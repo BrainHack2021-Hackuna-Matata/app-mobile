@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:eldertly_app/screens/meetupScreen/buttons/customButton.dart';
+
+import './customButton.dart';
 
 class NewRegister extends StatelessWidget {
   final int id;
@@ -31,9 +32,7 @@ class NewRegister extends StatelessWidget {
                   Colors.grey,
                 ),
                 Text(
-                  capacity == 1
-                      ? "Loading, please wait!"
-                      : "Meetup is full\nSelect another meetup.",
+                  capacity == 1 ? "Loading, please wait!" : "Meetup is full\nSelect another meetup.",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
