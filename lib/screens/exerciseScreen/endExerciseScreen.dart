@@ -13,35 +13,40 @@ class EndExerciseScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "GOOD JOB!",
+              "Congratulations!",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 25,
               ),
             ),
+            SizedBox(
+              height: 20.0,
+            ),
             Text(
-              "Exercise Complete!",
+              "You have completed your workout!",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 25,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: ElevatedButton(
-                onPressed: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TabScreen(),
+                  onPressed: () => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TabScreen(),
+                      ),
+                      (route) => false),
+                  child: Text(
+                    'Back to home',
+                    style: TextStyle(
+                      fontSize: 30,
                     ),
-                    (route) => false),
-                child: Text(
-                  'Back to home',
-                  style: TextStyle(
-                    fontSize: 36,
                   ),
-                ),
-              ),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 70),
+                  )),
             ),
           ],
         ),

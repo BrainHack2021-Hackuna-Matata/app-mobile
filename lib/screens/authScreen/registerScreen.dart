@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
                   title: const Text(
-                    'Cancellation',
+                    'Re-confirm',
                     style: TextStyle(
                       fontSize: 25,
                     ),

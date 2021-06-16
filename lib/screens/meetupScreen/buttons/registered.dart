@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import './customButton.dart';
+
+class Registered extends StatelessWidget {
+  final int id;
+  final String userName;
+  final int numComing;
+  final List<dynamic> attendees;
+  final Function deregisterMeetupHandler;
+  final Function deleteMeetupHandler;
+  Registered({
+    required this.id,
+    required this.userName,
+    required this.numComing,
+    required this.attendees,
+    required this.deregisterMeetupHandler,
+    required this.deleteMeetupHandler,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          // if user is the only guy there
+          numComing == 1
+              ? MeetupButton(
+                  "Delete",
+                  () => deleteMeetupHandler(context),
+                  Colors.red,
+                )
+              : MeetupButton(
+                  "Cancel",
+                  () => deregisterMeetupHandler(context),
+                  Colors.red,
+                ),
+        ],
+      ),
+    );
+  }
+}
+
+// need to have cancel/delete button

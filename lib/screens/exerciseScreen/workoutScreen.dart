@@ -18,56 +18,56 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   final _exMap = {
     "arm": [
       {
-        "file": "assets/exercisegifs/arm1.gif",
-        "name": "Arm 1",
+        "file": "assets/exercisegifs/arms 1.gif",
+        "name": "Wall Pushups",
       },
       {
-        "file": "assets/exercisegifs/arm2.gif",
-        "name": "Arm 2",
+        "file": "assets/exercisegifs/arms 2.gif",
+        "name": "Shoulder Stretch",
       },
       {
-        "file": "assets/exercisegifs/arm3.gif",
-        "name": "Arm 3",
+        "file": "assets/exercisegifs/arms 3.gif",
+        "name": "Arm Stretch",
       },
       {
-        "file": "assets/exercisegifs/arm4.gif",
-        "name": "Arm 4",
+        "file": "assets/exercisegifs/arms 4.gif",
+        "name": "Shoulder Squeeze",
       },
     ],
     "leg": [
       {
-        "file": "assets/exercisegifs/leg1.gif",
-        "name": "Leg 1",
+        "file": "assets/exercisegifs/legs 1.gif",
+        "name": "Knee Lifts",
       },
       {
-        "file": "assets/exercisegifs/leg2.gif",
-        "name": "Leg 2",
+        "file": "assets/exercisegifs/legs 2.gif",
+        "name": "Heel Raises",
       },
       {
-        "file": "assets/exercisegifs/leg3.gif",
-        "name": "Leg 3",
+        "file": "assets/exercisegifs/legs 3.gif",
+        "name": "Ankle Rotations",
       },
       {
-        "file": "assets/exercisegifs/leg4.gif",
-        "name": "Leg 4",
+        "file": "assets/exercisegifs/legs 4.gif",
+        "name": "Single Leg Balance",
       },
     ],
     "hip": [
       {
-        "file": "assets/exercisegifs/hip1.gif",
-        "name": "Hip 1",
+        "file": "assets/exercisegifs/hips 1.gif",
+        "name": "Abdominal Contractions",
       },
       {
-        "file": "assets/exercisegifs/hip2.gif",
-        "name": "Hip 2",
+        "file": "assets/exercisegifs/hips 2.gif",
+        "name": "Pelvic Tilts",
       },
       {
-        "file": "assets/exercisegifs/hip3.gif",
-        "name": "Hip 3",
+        "file": "assets/exercisegifs/hips 3.gif",
+        "name": "Side Stretch",
       },
       {
-        "file": "assets/exercisegifs/hip4.gif",
-        "name": "hip 4",
+        "file": "assets/exercisegifs/hips 4.gif",
+        "name": "Oblique Stretch",
       },
     ],
   };

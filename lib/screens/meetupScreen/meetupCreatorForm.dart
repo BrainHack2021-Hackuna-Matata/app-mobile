@@ -52,8 +52,8 @@ class _MyFormState extends State<MeetupCreatorForm> {
   String? _capacityValidator(String? value) {
     if (value != null && num.tryParse(value) == null) {
       return "Must be an integer";
-    } else if (num.tryParse(value!)! > 8) {
-      return "Must be less than 8";
+    } else if (num.tryParse(value!)! > 8 || num.tryParse(value)! < 2) {
+      return "Must be between 2 and 8";
     } else {
       return null;
     }
@@ -126,11 +126,16 @@ class _MyFormState extends State<MeetupCreatorForm> {
           DateTimeField(
             format: DateFormat("yyyy-MM-dd hh:mm aa"),
             onShowPicker: (context, currentValue) async {
-              final date = await showDatePicker(context: context, firstDate: DateTime(1900), initialDate: currentValue ?? DateTime.now(), lastDate: DateTime(2100));
+              final date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(1900),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(2100));
               if (date != null) {
                 final time = await showTimePicker(
                   context: context,
-                  initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                  initialTime:
+                      TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                 );
                 return DateTimeField.combine(date, time);
               } else {
