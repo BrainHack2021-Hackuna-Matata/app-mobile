@@ -32,10 +32,8 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         return Meetup(
           id: a['id'],
           title: a['title'],
-          description: a['description'],
           location: a['location'],
           capacity: a['capacity'],
-          imageurl: a['imageurl'],
           date: DateTime.parse(a['due']),
           coming: a['coming'],
           owner: a['owner'],
@@ -53,12 +51,16 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
   }
 
   void handleAdd() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Consumer<UserNotifier>(builder: (context, user, child) => Text(user.currentUser.mobile))),
+      appBar: AppBar(
+          title: Consumer<UserNotifier>(
+              builder: (context, user, child) =>
+                  Text(user.currentUser.mobile))),
       body: ListView.builder(
         //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
         padding: const EdgeInsets.only(bottom: 200),
@@ -66,7 +68,11 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
           return MeetupCard(
             id: meetups[index].id,
             title: meetups[index].title,
-            imageurl: meetups[index].imageurl,
+            imageurl: meetups[index].title == 'Chess'
+                ? 'assets/locations_meetup/chess.jpeg'
+                : meetups[index].title == 'Mahjong'
+                    ? 'assets/locations_meetup/mahjong.jpeg'
+                    : 'assets/locations_meetup/cards.jpeg',
             location: meetups[index].location,
             capacity: meetups[index].capacity,
             currentpax: meetups[index].coming.length,
