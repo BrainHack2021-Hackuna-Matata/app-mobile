@@ -29,10 +29,16 @@ class _TimerButtonState extends State<TimerButton> {
             padding: EdgeInsets.only(bottom: 5),
             child: Countdown(
               controller: widget.controller,
-              seconds: 59,
+              seconds: 3, //EDIT TIME HEREEEEEE
               interval: Duration(seconds: 1),
               build: (BuildContext context, double time) {
-                String tempTime = time.toStringAsFixed(0);
+                String tempTime = "";
+                if (time < 10) {
+                  tempTime = "0" + time.toStringAsFixed(0);
+                } else {
+                  tempTime = time.toStringAsFixed(0);
+                }
+
                 if (!start) {
                   widget.controller.resume();
                   start = true;
