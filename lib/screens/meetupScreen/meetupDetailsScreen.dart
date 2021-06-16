@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import '../../models/user.dart';
-import '../../components/notifier.dart';
+import 'package:intl/intl.dart';
 import 'dart:convert';
 
 import '../../components/notifier.dart';
 import '../../api/static.dart';
 import '../../models/meetup.dart';
+import './card/detailRows.dart';
 
 class MeetupDetailsScreen extends StatefulWidget {
   final int id;
@@ -67,8 +67,10 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
   Widget build(BuildContext context) {
     int numComing = md.coming.length;
     int blkNum = int.parse(md.location.substring(3));
-    String registered = numComing.toString() + "/" + md.capacity.toString();
+    String numRegistered = numComing.toString() + "/" + md.capacity.toString();
     String attendeesName = "";
+    String eventDate = DateFormat('dd MMM').format(md.date);
+    String hostName = md.hostname;
 
     for (int i = 0; i < numComing - 1; i++) {
       attendeesName += md.coming[i];
@@ -83,10 +85,10 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
       body: Center(
         child: Column(
           children: <Widget>[
-            // Block
+            // Image
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 200,
+              height: 150,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
@@ -106,50 +108,13 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
               padding: EdgeInsets.all(10),
             ),
 
-            // Location Row
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "Address: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "BLK $blkNum",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-            ),
             // Current Pax/Registered
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "Participant Count: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    registered,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color:
-                          md.capacity == numComing ? Colors.red : Colors.black,
-                    ),
-                  )
-                ],
-              ),
+            DetailRows(
+              "Participant Count: ",
+              numRegistered,
+              md.capacity == numComing ? Colors.red : Colors.black,
             ),
+
             // Names of people attending Row
             Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -170,6 +135,24 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                   ),
                 ],
               ),
+            ),
+
+            // Location Row
+            DetailRows(
+              "Address: ",
+              "BLK $blkNum",
+            ),
+
+            DetailRows(
+              "Date of Event: ",
+              eventDate,
+            ),
+
+            DetailRows(
+              "Name of Host: ",
+              hostName.length > 15
+                  ? hostName.replaceRange(14, hostName.length, '...')
+                  : hostName,
             ),
 
             numComing < md.capacity
