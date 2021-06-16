@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import './customButton.dart';
 
 class Registered extends StatelessWidget {
@@ -11,6 +10,7 @@ class Registered extends StatelessWidget {
   final List<dynamic> attendees;
   final Function deregisterMeetupHandler;
   final Function deleteMeetupHandler;
+  final String hostname;
   Registered({
     required this.id,
     required this.userName,
@@ -20,6 +20,7 @@ class Registered extends StatelessWidget {
     required this.attendees,
     required this.deregisterMeetupHandler,
     required this.deleteMeetupHandler,
+    required this.hostname,
   });
 
   @override

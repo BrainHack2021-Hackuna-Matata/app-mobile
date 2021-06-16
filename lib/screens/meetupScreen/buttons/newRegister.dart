@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:eldertly_app/screens/meetupScreen/buttons/customButton.dart';
-import 'package:http/http.dart' as http;
-import '../../../api/static.dart';
 
 class NewRegister extends StatelessWidget {
   final int id;
