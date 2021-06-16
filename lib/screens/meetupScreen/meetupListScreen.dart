@@ -1,13 +1,13 @@
-import 'package:eldertly_app/api/static.dart';
-import 'package:eldertly_app/models/meetup.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'dart:convert';
 
-import 'card/meetupCard.dart';
-import 'addMeetupScreen.dart';
+import '../../api/static.dart';
+import '../../models/meetup.dart';
 import '../../components/notifier.dart';
+import 'card/meetupCard.dart';
+import 'meetupCreatorScreen.dart';
 
 class MeetupListScreen extends StatefulWidget {
   const MeetupListScreen({Key? key}) : super(key: key);
@@ -46,7 +46,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         meetups = formattedArray;
       });
     });
-    print(meetups);
   }
 
   void handleRefresh() async {
@@ -54,16 +53,12 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
   }
 
   void handleAdd() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Consumer<UserNotifier>(
-              builder: (context, user, child) =>
-                  Text(user.currentUser.mobile))),
+      appBar: AppBar(title: Consumer<UserNotifier>(builder: (context, user, child) => Text(user.currentUser.mobile))),
       body: ListView.builder(
         //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
         padding: const EdgeInsets.only(bottom: 200),
