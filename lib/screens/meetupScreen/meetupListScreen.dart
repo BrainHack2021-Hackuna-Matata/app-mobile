@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 
 import 'card/meetupCard.dart';
-import 'addMeetupScreen.dart';
+import 'meetupCreatorScreen.dart';
 import '../../components/notifier.dart';
 
 class MeetupListScreen extends StatefulWidget {
@@ -46,7 +46,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         meetups = formattedArray;
       });
     });
-    print(meetups);
   }
 
   void handleRefresh() async {

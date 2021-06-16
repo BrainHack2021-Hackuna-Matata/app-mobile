@@ -27,7 +27,7 @@ class MeetupDetailsScreen extends StatefulWidget {
 }
 
 class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
-  void selectExerciseHandler(
+  void selectMeetupHandler(
       {required int id, required int currentpax, required List attendees}) {
     //TODO pop dialogue screen to confirm and send it to
     //Call api to update participants and current pax
@@ -147,7 +147,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                 ? Padding(
                     padding: EdgeInsets.all(25),
                     child: ElevatedButton(
-                      onPressed: () => selectExerciseHandler(
+                      onPressed: () => selectMeetupHandler(
                           id: widget.id,
                           attendees: widget.attendees,
                           currentpax: widget.currentpax),
