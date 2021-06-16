@@ -13,13 +13,14 @@ import 'package:intl/intl.dart';
 
 
 class MapScreen extends StatefulWidget {
+ const MapScreen({Key? key}) : super(key: key);
 
-  State<MapScreen> createState() => MapScreenState();
+  @override
+  _MapScreenState createState() => _MapScreenState();
 }
-
-class MapScreenState extends State<MapScreen> {
-  Completer<GoogleMapController> _controller = Completer();
-  List<dynamic> posts = [];
+   List<dynamic> posts = [];
+class _MapScreenState extends State<MapScreen> {
+   
 
   @override
   void initState() {
@@ -27,11 +28,10 @@ class MapScreenState extends State<MapScreen> {
     super.initState();
   }
 
- void getData() async {
-    await http.get(Uri.parse('${Api.CURR_URL}/posts')).then((res) {
+  void getData() async {
+    await http.get(Uri.parse('https://hackuna-matata.herokuapp.com/api/posts')).then((res) {
       List array = jsonDecode(res.body);
-      var formattedArray = array.map((a) {
-        
+      var formattedArray = array.map((a) {     
         return Post(
           id :  int.parse(a["id"]),
           title : a["title"],
@@ -48,17 +48,16 @@ class MapScreenState extends State<MapScreen> {
           lat : double.parse(a["lat"]),
           long : double.parse(a["long"]),
           unit : a["unit"],
-        );      
+        );    
+    
       }).toList();
-      print("hello");
-      print(formattedArray);
       setState(() {
         posts = formattedArray;
       });
     });
   
   }
-  
+  Completer<GoogleMapController> _controller = Completer();
   Set<Marker> markers = Set();
   String selectedMarkerName = "No Location Selected";
   String selectedMarkerHelp = "";
@@ -77,9 +76,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
 
   @override
   Widget build(BuildContext context) {
-
      for(var i=0;i<posts.length;i++){
-      print("markers");
       markers.add(
       Marker(
       markerId: MarkerId(posts[i].id),

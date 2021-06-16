@@ -15,9 +15,9 @@ class MeetupListScreen extends StatefulWidget {
   @override
   _MeetupListScreenState createState() => _MeetupListScreenState();
 }
-
-class _MeetupListScreenState extends State<MeetupListScreen> {
   List<dynamic> meetups = [];
+class _MeetupListScreenState extends State<MeetupListScreen> {
+  
 
   @override
   void initState() {
@@ -29,7 +29,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
     await http.get(Uri.parse('${Api.CURR_URL}/meetups')).then((res) {
       List array = jsonDecode(res.body);
       var formattedArray = array.map((a) {
-        print(array);
         return Meetup(
           id: a['id'],
           title: a['title'],
@@ -42,6 +41,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         );
       }).toList();
       setState(() {
+        print('set state');
         meetups = formattedArray;
       });
 
