@@ -94,7 +94,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
             )
           : Center(
               child: Text(
-                "No meetup found.\nClick on '+' button to add a meetup",
+                "Loading meetups, please wait!",
                 style: TextStyle(fontSize: 20),
               ),
             ),
