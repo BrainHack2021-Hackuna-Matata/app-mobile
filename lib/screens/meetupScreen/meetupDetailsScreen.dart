@@ -49,7 +49,6 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
         .then((res) {
       Map<String, dynamic> a = jsonDecode(res.body);
       setState(() {
-        print(a);
         md = Meetup(
           id: a['id'],
           title: a['title'],
