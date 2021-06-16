@@ -269,7 +269,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Consumer<UserNotifier>(builder: (context, user, child) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
                         onPrimary: Colors.white,
                       ),
                       child: Text('Register'),

@@ -52,9 +52,9 @@ class MapScreenState extends State<MapScreen> {
           '${a['unit']}',
           'assets/purchase_default/groceries_default.jpg',
           '${a['description']}',
-          '${a['id']}',
-          '${a['fulfilled']}',
-          '${a['accepted']}',
+           a['id'],
+           a['fulfilled'],
+           a['accepted'],
           '${a['name']}',];
 
       }).toList();

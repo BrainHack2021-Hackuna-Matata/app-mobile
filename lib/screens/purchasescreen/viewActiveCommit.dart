@@ -51,7 +51,7 @@ class ViewActiveCommit extends StatelessWidget {
       style: TextStyle(
           fontSize: 36,
           backgroundColor: Colors.yellow[200],
-          color: Colors.yellow[50]));
+          color: Colors.black));
 
   Widget acceptedJellybean = Text("Accepted",
       style: TextStyle(

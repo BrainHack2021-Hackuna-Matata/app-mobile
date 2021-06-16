@@ -34,7 +34,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
 
 Widget waitingJellybean =  Text("Pending Accept",style: TextStyle(
-              fontSize: 36, backgroundColor: Colors.yellow[200] , color: Colors.yellow[50] ));
+              fontSize: 36, backgroundColor: Colors.yellow[200] , color: Colors.black ));
 
 Widget acceptedJellybean =  Text("Accepted",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.green[200] , color: Colors.green[50] ));
