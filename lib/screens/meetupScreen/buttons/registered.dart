@@ -9,6 +9,7 @@ class Registered extends StatelessWidget {
   final List<dynamic> attendees;
   final Function deregisterMeetupHandler;
   final Function deleteMeetupHandler;
+  final String hostname;
   Registered({
     required this.id,
     required this.userName,
@@ -16,6 +17,7 @@ class Registered extends StatelessWidget {
     required this.attendees,
     required this.deregisterMeetupHandler,
     required this.deleteMeetupHandler,
+    required this.hostname,
   });
 
   @override
@@ -25,7 +27,7 @@ class Registered extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           // if user is the only guy there
-          numComing == 1
+          hostname == userName
               ? MeetupButton(
                   "Delete",
                   () => deleteMeetupHandler(context),

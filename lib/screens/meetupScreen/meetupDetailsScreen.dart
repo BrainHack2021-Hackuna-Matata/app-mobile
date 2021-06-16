@@ -371,6 +371,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                     attendees: md.coming,
                     deregisterMeetupHandler: deregisterMeetupHandler,
                     deleteMeetupHandler: deleteMeetupHandler,
+                    hostname: hostName,
                   )
                 : NewRegister(
                     id: widget.id,
