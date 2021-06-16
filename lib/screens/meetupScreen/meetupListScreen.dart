@@ -32,10 +32,8 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         return Meetup(
           id: a['id'],
           title: a['title'],
-          description: a['description'],
           location: a['location'],
           capacity: a['capacity'],
-          imageurl: a['imageurl'],
           date: DateTime.parse(a['due']),
           coming: a['coming'],
           owner: a['owner'],
@@ -66,7 +64,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
           return MeetupCard(
             id: meetups[index].id,
             title: meetups[index].title,
-            imageurl: meetups[index].imageurl,
             location: meetups[index].location,
             capacity: meetups[index].capacity,
             currentpax: meetups[index].coming.length,
