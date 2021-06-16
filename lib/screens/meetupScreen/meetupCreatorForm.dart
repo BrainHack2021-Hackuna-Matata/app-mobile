@@ -52,7 +52,7 @@ class _MyFormState extends State<MeetupCreatorForm> {
   String? _capacityValidator(String? value) {
     if (value != null && num.tryParse(value) == null) {
       return "Must be an integer";
-    } else if (num.tryParse(value!)! > 8 || num.tryParse(value!)! < 2) {
+    } else if (num.tryParse(value!)! > 8 || num.tryParse(value)! < 2) {
       return "Must be between 2 and 8";
     } else {
       return null;

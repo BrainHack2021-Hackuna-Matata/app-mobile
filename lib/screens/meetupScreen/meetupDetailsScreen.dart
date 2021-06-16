@@ -8,6 +8,8 @@ import '../../components/notifier.dart';
 import '../../api/static.dart';
 import '../../models/meetup.dart';
 import './card/detailRows.dart';
+import './buttons/registered.dart';
+import './buttons/newRegister.dart';
 
 class MeetupDetailsScreen extends StatefulWidget {
   final int id;
@@ -37,10 +39,19 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
       location: "999999",
       title: "LOADING",
       owner: -999);
+
+  String userName = "";
+
   @override
   void initState() {
     getData();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    userName = Provider.of<UserNotifier>(context).currentUser.name;
+    super.didChangeDependencies();
   }
 
   void getData() async {
@@ -154,50 +165,17 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                   : hostName,
             ),
 
-            numComing < md.capacity
-                ? Padding(
-                    padding: EdgeInsets.all(25),
-                    child: ElevatedButton(
-                      onPressed: () => selectMeetupHandler(
-                          id: widget.id,
-                          attendees: md.coming,
-                          currentpax: numComing),
-                      child: Text(
-                        "Join Meetup",
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(250, 90),
-                      ),
-                    ),
+            md.coming.contains(userName)
+                ? Registered(
+                    userName: userName,
+                    numComing: numComing,
+                    attendees: md.coming,
                   )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(25),
-                        child: ElevatedButton(
-                          onPressed: null,
-                          child: Text(
-                            "Meetup FULL",
-                            style: TextStyle(fontSize: 30),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(250, 90),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Go back and choose another meetup!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
+                : NewRegister(
+                    userName: userName,
+                    numComing: numComing,
+                    capacity: md.capacity,
+                    attendees: md.coming,
                   ),
           ],
         ),
