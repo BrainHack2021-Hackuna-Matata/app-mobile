@@ -249,16 +249,61 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
         child: Column(
           children: <Widget>[
             // Image
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 150,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      "assets/locations_meetup/${md.title.toLowerCase()}.jpeg"),
-                  fit: BoxFit.fitWidth,
+            Stack(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/locations_meetup/${md.title.toLowerCase()}.jpeg"),
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 20,
+                  right: 10,
+                  child: md.hostname == userName
+                      ? Container(
+                          width: 250,
+                          color: Colors.blue,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 20,
+                          ),
+                          child: Text(
+                            'My Meetup!',
+                            style: TextStyle(
+                              fontSize: 36,
+                              color: Colors.white,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
+                          ),
+                        )
+                      : md.coming.contains(userName)
+                          ? Container(
+                              width: 250,
+                              color: Colors.green,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 20,
+                              ),
+                              child: Text(
+                                'Attending!',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  color: Colors.white,
+                                ),
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
+                              ),
+                            )
+                          : Container(),
+                )
+              ],
             ),
             Container(
               child: Text(
