@@ -98,30 +98,37 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         centerTitle: true,
         title: Text("Workout"),
       ),
-      bottomNavigationBar: MyAppBar(),
       // show exercise and timer if within index
       body: _exIndex < widget.exList.length
           ? Container(
               width: double.infinity,
-              height: double.infinity,
+              height: MediaQuery.of(context).size.height,
               //scaffold used to get the basic app styling
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Name of exercise
-                  Text(
-                    _exMap[_exType]?[_exNum]["name"] as String,
-                    style: TextStyle(fontSize: 32),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 10),
+                    child:
+                        // Name of exercise
+                        Text(
+                      _exMap[_exType]?[_exNum]["name"] as String,
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
 
-                  // Create gap between name and gif
-                  SizedBox(height: 10),
-
                   // Play gif
-                  Image.asset(
-                    _exMap[_exType]?[_exNum]["file"] as String,
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: MediaQuery.of(context).size.height * .5,
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Image.asset(
+                      _exMap[_exType]?[_exNum]["file"] as String,
+                      width: MediaQuery.of(context).size.width * .9,
+                      height: MediaQuery.of(context).size.height * .5,
+                    ),
                   ),
 
                   // play/pause button

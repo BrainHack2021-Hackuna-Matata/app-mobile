@@ -25,21 +25,25 @@ class _TimerButtonState extends State<TimerButton> {
       child: Column(
         children: [
           // Timer
-          Countdown(
-            controller: widget.controller,
-            seconds: 3,
-            interval: Duration(milliseconds: 100),
-            build: (BuildContext context, double time) {
-              if (!start) {
-                widget.controller.resume();
-                start = true;
-              }
-              return Text(
-                "${time}s",
-                style: TextStyle(fontSize: 40.0),
-              );
-            },
-            onFinished: () => widget.nextEx(widget.controller),
+          Padding(
+            padding: EdgeInsets.only(bottom: 5),
+            child: Countdown(
+              controller: widget.controller,
+              seconds: 59,
+              interval: Duration(seconds: 1),
+              build: (BuildContext context, double time) {
+                String tempTime = time.toStringAsFixed(0);
+                if (!start) {
+                  widget.controller.resume();
+                  start = true;
+                }
+                return Text(
+                  "00:${tempTime}",
+                  style: TextStyle(fontSize: 35),
+                );
+              },
+              onFinished: () => widget.nextEx(widget.controller),
+            ),
           ),
           FloatingActionButton(
             child: fab,
