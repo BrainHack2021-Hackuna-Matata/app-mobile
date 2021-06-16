@@ -52,17 +52,16 @@ class MapScreenState extends State<MapScreen> {
           '${a['unit']}',
           'assets/purchase_default/groceries_default.jpg',
           '${a['description']}',
-           a['id'],
-           a['fulfilled'],
-           a['accepted'],
-          '${a['name']}',];
-
+          a['id'],
+          a['fulfilled'],
+          a['accepted'],
+          '${a['name']}',
+        ];
       }).toList();
       setState(() {
         markerData = md;
       });
     });
-    print(markerData);
   }
 
   // List markerData = [
@@ -136,107 +135,147 @@ class MapScreenState extends State<MapScreen> {
 
     return new Scaffold(
         appBar: AppBar(
-        title: Text("Groupbuy"),
-      ),
+          title: Text("Groupbuy"),
+        ),
         body: SafeArea(
-        child: Column(children: <Widget>[
-      Stack(children: <Widget>[
-          Container(
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-              markers: markers,
-              mapToolbarEnabled: false,
+          child: Column(children: <Widget>[
+            Stack(children: <Widget>[
+              Container(
+                child: GoogleMap(
+                  mapType: MapType.normal,
+                  initialCameraPosition: _kGooglePlex,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                  markers: markers,
+                  mapToolbarEnabled: false,
+                ),
+                constraints: BoxConstraints.tightFor(
+                    height: MediaQuery.of(context).size.height * 0.6),
+              )
+            ]),
+            Spacer(),
+            (selectedMarkerName == "No Location Selected")
+                ? Text(selectedMarkerName,
+                    style: TextStyle(
+                      fontSize: 26,
+                    ))
+                : Text("BLK " + selectedMarkerName,
+                    style: TextStyle(
+                      fontSize: 26,
+                    )),
+            (selectedMarkerHelp == "Groceries Needed")
+                ? groceryJellybean
+                : (selectedMarkerHelp == "Meal Needed")
+                    ? mealJellybean
+                    : SizedBox(height: 1),
+            (selectedMarkerTime == '')
+                ? Text('')
+                : Text(
+                    DateFormat('dd MMM')
+                        .format(DateTime.parse(selectedMarkerTime)),
+                    style: TextStyle(
+                      fontSize: 26,
+                    )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        textStyle: TextStyle(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
+                    onPressed: (selectedMarkerName == "No Location Selected")
+                        ? null
+                        : () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MapMoreInfo(
+                                          markerID:
+                                              markerData[selectedMarkerIndex]
+                                                  [0],
+                                          lat: markerData[selectedMarkerIndex]
+                                              [1],
+                                          lng: markerData[selectedMarkerIndex]
+                                              [2],
+                                          blkNum:
+                                              markerData[selectedMarkerIndex]
+                                                  [3],
+                                          helpNeeded:
+                                              markerData[selectedMarkerIndex]
+                                                  [4],
+                                          dueDate:
+                                              markerData[selectedMarkerIndex]
+                                                  [5],
+                                          unit: markerData[selectedMarkerIndex]
+                                              [7],
+                                          image: markerData[selectedMarkerIndex]
+                                              [8],
+                                          details:
+                                              markerData[selectedMarkerIndex]
+                                                  [9],
+                                        )));
+                          },
+                    child: (selectedMarkerName == "No Location Selected")
+                        ? const Text('N/A')
+                        : const Text('More Info')),
+                SizedBox(width: 20),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        textStyle: TextStyle(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
+                    onPressed: (selectedMarkerName == "No Location Selected")
+                        ? null
+                        : () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewActiveCommit(
+                                          lat: markerData[selectedMarkerIndex]
+                                              [1],
+                                          long: markerData[selectedMarkerIndex]
+                                              [2],
+                                          blkNum:
+                                              markerData[selectedMarkerIndex]
+                                                  [3],
+                                          helpNeeded:
+                                              markerData[selectedMarkerIndex]
+                                                  [4],
+                                          dueDate:
+                                              markerData[selectedMarkerIndex]
+                                                  [5],
+                                          unit: markerData[selectedMarkerIndex]
+                                              [7],
+                                          details:
+                                              markerData[selectedMarkerIndex]
+                                                  [9],
+                                          id: markerData[selectedMarkerIndex]
+                                              [10],
+                                          fulfilled:
+                                              markerData[selectedMarkerIndex]
+                                                  [11],
+                                          accepted:
+                                              markerData[selectedMarkerIndex]
+                                                  [12],
+                                          name: markerData[selectedMarkerIndex]
+                                              [13],
+                                          getinfo: getinfo,
+                                        ))).then((res) {
+                              getinfo();
+                            });
+                          },
+                    child: (selectedMarkerName == "No Location Selected")
+                        ? const Text('N/A')
+                        : const Text('Accept')),
+              ],
             ),
-            constraints: BoxConstraints.tightFor(
-                height: MediaQuery.of(context).size.height * 0.6),
-          )
-      ]),
-      Spacer(),
-      (selectedMarkerName == "No Location Selected")
-            ? Text(selectedMarkerName,
-                style: TextStyle(
-                  fontSize: 26,
-                ))
-            : Text("BLK " + selectedMarkerName,
-                style: TextStyle(
-                  fontSize: 26,
-                )),
-      (selectedMarkerHelp == "Groceries Needed")
-            ? groceryJellybean
-            : (selectedMarkerHelp == "Meal Needed")
-                ? mealJellybean
-                : SizedBox(height: 1),
-      (selectedMarkerTime == '')
-      ? Text('')
-      : Text(DateFormat('dd MMM').format(DateTime.parse(selectedMarkerTime)),
-            style: TextStyle(
-              fontSize: 26,
-            )),
-      Row( mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    textStyle: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                onPressed: (selectedMarkerName == "No Location Selected")
-                    ? null
-                    : () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MapMoreInfo(
-                                      markerID: markerData[selectedMarkerIndex][0],
-                                      lat: markerData[selectedMarkerIndex][1],
-                                      lng: markerData[selectedMarkerIndex][2],
-                                      blkNum: markerData[selectedMarkerIndex][3],
-                                      helpNeeded: markerData[selectedMarkerIndex][4],
-                                      dueDate: markerData[selectedMarkerIndex][5],
-                                      unit: markerData[selectedMarkerIndex][7],
-                                      image: markerData[selectedMarkerIndex][8],
-                                      details: markerData[selectedMarkerIndex][9],
-                                      
-                                    )));
-                      },
-                child: (selectedMarkerName == "No Location Selected")
-                    ? const Text('N/A')
-                    : const Text('More Info')),
-            SizedBox(width: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    textStyle: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                onPressed: (selectedMarkerName == "No Location Selected")
-                    ? null
-                    : () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewActiveCommit(                    
-                                      lat: markerData[selectedMarkerIndex][1],
-                                      long: markerData[selectedMarkerIndex][2],
-                                      blkNum: markerData[selectedMarkerIndex][3],
-                                      helpNeeded: markerData[selectedMarkerIndex][4],
-                                      dueDate: markerData[selectedMarkerIndex][5],
-                                      unit: markerData[selectedMarkerIndex][7],
-                                      details: markerData[selectedMarkerIndex][9],
-                                      id: markerData[selectedMarkerIndex][10],
-                                      fulfilled: markerData[selectedMarkerIndex][11],
-                                      accepted: markerData[selectedMarkerIndex][12],
-                                      name: markerData[selectedMarkerIndex][13],
-                                    )));
-                      },
-                child: (selectedMarkerName == "No Location Selected")
-                    ? const Text('N/A')
-                    : const Text('Accept')),
-          ],
-      ),
-      SizedBox(height: 20),
-    ]),
+            SizedBox(height: 20),
+          ]),
         ));
   }
 }
