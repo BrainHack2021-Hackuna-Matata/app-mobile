@@ -24,7 +24,8 @@ class MeetupDetailsScreen extends StatefulWidget {
 }
 
 class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
-  void selectExerciseHandler({required int id, required int currentpax, required List attendees}) {
+  void selectExerciseHandler(
+      {required int id, required int currentpax, required List attendees}) {
     //TODO pop dialogue screen to confirm and send it to
     //Call api to update participants and current pax
   }
@@ -32,7 +33,8 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     int blkNum = int.parse(widget.location.substring(3));
-    String registered = widget.currentpax.toString() + "/" + widget.capacity.toString();
+    String registered =
+        widget.currentpax.toString() + "/" + widget.capacity.toString();
 
     String attendeesName = "";
 
@@ -76,7 +78,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Location: ",
+                    "Address: ",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -98,7 +100,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Registered: ",
+                    "Participant Count: ",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -108,7 +110,9 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                     registered,
                     style: TextStyle(
                       fontSize: 20,
-                      color: widget.capacity == widget.currentpax ? Colors.red : Colors.black,
+                      color: widget.capacity == widget.currentpax
+                          ? Colors.red
+                          : Colors.black,
                     ),
                   )
                 ],
@@ -122,7 +126,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Participants: ",
+                    "Registered: ",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -140,7 +144,10 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                 ? Padding(
                     padding: EdgeInsets.all(25),
                     child: ElevatedButton(
-                      onPressed: () => selectExerciseHandler(id: widget.id, attendees: widget.attendees, currentpax: widget.currentpax),
+                      onPressed: () => selectExerciseHandler(
+                          id: widget.id,
+                          attendees: widget.attendees,
+                          currentpax: widget.currentpax),
                       child: Text(
                         "Join Meetup",
                         style: TextStyle(fontSize: 30),

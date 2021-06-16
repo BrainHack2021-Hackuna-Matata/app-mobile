@@ -86,52 +86,39 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
     selectedCount = countSelectedExercises();
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Select Workout"),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: ExerciseOption(
-                  "arm",
-                  _arms,
-                  () {
-                    setState(() {
-                      _arms = _arms ? false : true;
-                    });
-                  },
-                ),
-              ),
+            ExerciseOption(
+              "arm",
+              _arms,
+              () {
+                setState(() {
+                  _arms = _arms ? false : true;
+                });
+              },
             ),
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: ExerciseOption(
-                  "hip",
-                  _hips,
-                  () {
-                    setState(() {
-                      _hips = _hips ? false : true;
-                    });
-                  },
-                ),
-              ),
+            ExerciseOption(
+              "hip",
+              _hips,
+              () {
+                setState(() {
+                  _hips = _hips ? false : true;
+                });
+              },
             ),
-
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: ExerciseOption(
-                  "leg",
-                  _legs,
-                  () {
-                    setState(() {
-                      _legs = _legs ? false : true;
-                    });
-                  },
-                ),
-              ),
+            ExerciseOption(
+              "leg",
+              _legs,
+              () {
+                setState(() {
+                  _legs = _legs ? false : true;
+                });
+              },
             ),
 
             //print time taken for exercises
@@ -156,16 +143,16 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
 
             //start button
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 20),
               child: ElevatedButton(
                 onPressed: _ExercisesSelected
                     ? () => selectExerciseHandler(_arms, _legs, _hips)
                     : null,
                 child: Text('START'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreen,
+                  minimumSize: Size(200, 80),
                   textStyle: TextStyle(
-                    fontSize: 25,
+                    fontSize: 30,
                   ),
                 ),
               ),
@@ -173,88 +160,6 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
           ],
         ),
       ),
-      // body: SafeArea (
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       Column(
-      //           //####Row of Columns of Selection buttons + text underneath
-      //           // mainAxisSize: MainAxisSize.min,
-      //           children: <Widget>[
-      //             Material(
-      //               child: InkWell(
-      //                 onTap: () {
-      //                   setState(() {
-      //                     _arms = !_arms;
-      //                     _selectedExercises = _arms || _legs || _hips;
-      //                     selectedCount = countSelectedExercises();
-      //                   });
-      //                 },
-      //                 child: Container(
-      //                   child: ClipRRect(
-      //                     borderRadius: BorderRadius.circular(20.0),
-      //                     child: _arms ? Image.asset('assets/icons/arm.png', gaplessPlayback: true) : Image.asset('assets/icons/arm-off.png', gaplessPlayback: true),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             //space between buttons
-      //             SizedBox(height: 20),
-      //
-      //             Material(
-      //               child: InkWell(
-      //                 onTap: () {
-      //                   setState(() {
-      //                     _hips = !_hips;
-      //                     _selectedExercises = _arms || _legs || _hips;
-      //                     selectedCount = countSelectedExercises();
-      //                   });
-      //                 },
-      //                 child: Container(
-      //                   child: ClipRRect(
-      //                     borderRadius: BorderRadius.circular(20.0),
-      //                     child: _hips ? Image.asset('assets/icons/hip.png', gaplessPlayback: true) : Image.asset('assets/icons/hip-off.png', gaplessPlayback: true),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             //space between buttons
-      //             SizedBox(height: 20),
-      //             Material(
-      //               child: InkWell(
-      //                 onTap: () {
-      //                   setState(() {
-      //                     _legs = !_legs;
-      //                     _selectedExercises = _arms || _legs || _hips;
-      //                     selectedCount = countSelectedExercises();
-      //                   });
-      //                 },
-      //                 child: Container(
-      //                   child: ClipRRect(
-      //                     borderRadius: BorderRadius.circular(20.0),
-      //                     child: _legs ? Image.asset('assets/icons/leg.png', gaplessPlayback: true) : Image.asset('assets/icons/leg-off.png', gaplessPlayback: true),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ]),
-      //       SizedBox(height: 20),
-      //       Text("Estimated Exercise Time:",
-      //           style: TextStyle(
-      //             fontSize: 25,
-      //           )),
-      //       Text(exerciseTimes[selectedCount], style: TextStyle(fontSize: 25)),
-      //       SizedBox(height: 20),
-      //       ElevatedButton(
-      //           style: ElevatedButton.styleFrom(
-      //               primary: Colors.green, padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-      //           onPressed: _selectedExercises
-      //               ? () => selectExerciseHandler(_arms, _legs, _hips) // What happens after start exercise
-      //               : null,
-      //           child: _selectedExercises ? const Text('Start Exercise!') : const Text('No Exercises Selected')),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
@@ -269,17 +174,17 @@ class ExerciseOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      foregroundDecoration: _isActive
-          ? null
-          : BoxDecoration(
-              color: Colors.grey,
-              backgroundBlendMode: BlendMode.saturation,
-            ),
-      child: IconButton(
-        icon: Image.asset(
-            "assets/icons/${_isActive ? _imageName : '${_imageName}-off'}.png"),
-        iconSize: 100,
-        onPressed: onPress,
+      child: InkWell(
+        onTap: onPress,
+        child: Container(
+          margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.asset(
+                "assets/icons/${_isActive ? _imageName : '${_imageName}-off'}.png",
+                gaplessPlayback: true),
+          ),
+        ),
       ),
     );
   }
