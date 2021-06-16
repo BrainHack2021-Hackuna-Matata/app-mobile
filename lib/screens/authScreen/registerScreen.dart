@@ -86,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'password': passwordController.text,
       'postal': postalController.text,
       'unit': unitController.text,
-      'usertype': false,
+      'usertype': _usertype,
       'block': postalController.text.substring(3),
       'lat': double.parse(lat.toStringAsFixed(5)),
       'long': double.parse(long.toStringAsFixed(5)),
