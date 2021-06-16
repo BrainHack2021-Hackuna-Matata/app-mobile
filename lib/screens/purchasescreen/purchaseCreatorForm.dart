@@ -1,12 +1,14 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import '../../components/notifier.dart';
 import '../../models/user.dart';
-import 'package:provider/provider.dart';
 
 class PurchaseCreatorForm extends StatefulWidget {
   final Function _submitForm;
+
   PurchaseCreatorForm(this._submitForm);
 
   @override
@@ -21,20 +23,20 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     'title': '',
     'description': '',
     'location': '', //block
-    'name' : '',
+    'name': '',
     //'coming' : '', //groupbuyer name
-    'owner' : -1,
-    'due' : '',
-    'fulfilled' : false,
-    'accepted' : false,
-    'lat' : '', // 
-    'long' : '', //
-    'unit' : '',
+    'owner': -1,
+    'due': '',
+    'fulfilled': false,
+    'accepted': false,
+    'lat': '', //
+    'long': '', //
+    'unit': '',
   };
 
   var _dropdownOption = "Groceries Needed";
 
-@override
+  @override
   void didChangeDependencies() {
     final User currentuser = Provider.of<UserNotifier>(context).currentUser;
 
@@ -47,8 +49,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     super.didChangeDependencies();
   }
 
-
-
   String? _blkNumValidator(String? value) {
     if (value == null || value.isEmpty) {
       return "Blk Number Required";
@@ -58,7 +58,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
       return null;
     }
   }
-
 
   String? _dateTimeValidator(DateTime? value) {
     if (value == null) {
@@ -70,12 +69,12 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     }
   }
 
-   String? _detailsValidator(String? value) {
+  String? _detailsValidator(String? value) {
     if (value == null || value.isEmpty) {
       return "Enter details of your request";
-    } else if (value.length < 12 ) {
+    } else if (value.length < 12) {
       return "Please enter more details";
-    } else if (value.length > 400 ) {
+    } else if (value.length > 400) {
       return "Please enter more details";
     } else {
       return null;
@@ -84,7 +83,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
 
   void _submitForm(UserNotifier user) {
     final formState = _formKey.currentState;
-
 
     if (formState!.validate()) {
       formState.save();
@@ -95,73 +93,77 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     // print(formData);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
-              child:  Consumer<UserNotifier>(builder: (context, user, child) {
-                return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            DropdownButtonFormField<String>(
-              items: ["Groceries Needed", "Meal Needed"].map((item) {
-                return DropdownMenuItem(child: Text(item), value: item);
-              }).toList(),
-              value: _dropdownOption,
-              onChanged: (newOption) {
-                setState(() {
-                  _dropdownOption = newOption!;
-                });
-              },
-              onSaved: (String? value) {
-                formData['title'] = value;
-              },
-              decoration: InputDecoration(labelText: "Type"),
-            ),
-            DateTimeField(
-              format: DateFormat("yyyy-MM-dd hh:mm aa"),
-              onShowPicker: (context, currentValue) async {
-                final date = await showDatePicker(context: context, firstDate: DateTime(1900), initialDate: currentValue ?? DateTime.now(), lastDate: DateTime(2100));
-                if (date != null) {
-                  final time = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                  );
-                  return DateTimeField.combine(date, time);
-                } else {
-                  return currentValue;
-                }
-              },
-              validator: _dateTimeValidator,
-              onSaved: (DateTime? value) {
-                formData['due'] = value!.toIso8601String();
-              },
-              decoration: InputDecoration(labelText: "Date and Time"),
-            ),
-            TextFormField(
-              validator: _detailsValidator,
-              onSaved: (String? value) {
-                formData['description'] = value;
-              },
-              decoration: InputDecoration(
-                labelText: "Details",
-              ),
-              keyboardType: TextInputType.multiline,
-              maxLines: 8,
-              maxLength: 300,
-            ),
-
-            ElevatedButton(onPressed: ()=>_submitForm(user) , child: Text("Submit"))
-          ],
-                );
-              }
-          )
-        )
-
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Consumer<UserNotifier>(
+          builder: (context, user, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                DropdownButtonFormField<String>(
+                  items: ["Groceries Needed", "Meal Needed"].map((item) {
+                    return DropdownMenuItem(child: Text(item), value: item);
+                  }).toList(),
+                  value: _dropdownOption,
+                  onChanged: (newOption) {
+                    setState(() {
+                      _dropdownOption = newOption!;
+                    });
+                  },
+                  onSaved: (String? value) {
+                    formData['title'] = value;
+                  },
+                  decoration: InputDecoration(labelText: "Type"),
+                ),
+                SizedBox(height: 10),
+                DateTimeField(
+                  format: DateFormat("yyyy-MM-dd hh:mm aa"),
+                  onShowPicker: (context, currentValue) async {
+                    final date = await showDatePicker(context: context, firstDate: DateTime(1900), initialDate: currentValue ?? DateTime.now(), lastDate: DateTime(2100));
+                    if (date != null) {
+                      final time = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                      );
+                      return DateTimeField.combine(date, time);
+                    } else {
+                      return currentValue;
+                    }
+                  },
+                  validator: _dateTimeValidator,
+                  onSaved: (DateTime? value) {
+                    formData['due'] = value!.toIso8601String();
+                  },
+                  decoration: InputDecoration(labelText: "Date and Time"),
+                ),
+                SizedBox(height: 30),
+                TextFormField(
+                  validator: _detailsValidator,
+                  onSaved: (String? value) {
+                    formData['description'] = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Details",
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 8,
+                  maxLength: 300,
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(onPressed: () => _submitForm(user), child: Text("Submit"))
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

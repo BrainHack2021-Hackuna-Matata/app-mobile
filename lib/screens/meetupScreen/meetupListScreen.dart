@@ -63,10 +63,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //     title: Consumer<UserNotifier>(
-      //         builder: (context, user, child) =>
-      //             Text(user.currentUser.mobile))),
       appBar: AppBar(
         title: Text("Meetups"),
         automaticallyImplyLeading: false,
@@ -87,15 +83,15 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
                   attendees: meetups[index].coming,
                   date: meetups[index].date,
                   hostname: meetups[index].hostname,
-                  getData: handleRefresh,
+                  getData: getData,
                 );
               },
               itemCount: meetups.length,
             )
           : Center(
-              child: Text(
-                "Loading meetups, please wait!",
-                style: TextStyle(fontSize: 20),
+              child: Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
               ),
             ),
       //Adding two FloatingActionButtons into meetuplistscreen

@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
-import '../../components/notifier.dart';
-import '../../api/static.dart';
-import '../../models/meetup.dart';
-import './card/detailRows.dart';
-import './buttons/registered.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import './buttons/newRegister.dart';
+import './buttons/registered.dart';
+import './card/detailRows.dart';
+import '../../api/static.dart';
+import '../../components/notifier.dart';
+import '../../models/meetup.dart';
 
 class MeetupDetailsScreen extends StatefulWidget {
   final int id;
@@ -24,15 +25,7 @@ class MeetupDetailsScreen extends StatefulWidget {
 
 class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
   //meetup details
-  Meetup md = Meetup(
-      capacity: 1,
-      coming: ["Loading"],
-      date: DateTime(2099, 12, 31),
-      hostname: "Loading",
-      id: -999,
-      location: "999999",
-      title: "LOADING",
-      owner: -999);
+  Meetup md = Meetup(capacity: 1, coming: ["Loading"], date: DateTime(2099, 12, 31), hostname: "Loading", id: -999, location: "999999", title: "LOADING", owner: -999);
 
   String userName = "";
 
@@ -125,8 +118,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                   TextButton(
                     onPressed: () async {
                       Navigator.pop(context);
-                      var newuser =
-                          [...md.coming].where((i) => i != userName).toList();
+                      var newuser = [...md.coming].where((i) => i != userName).toList();
                       await http
                           .post(
                         Uri.parse('${Api.CURR_URL}/meetups/${widget.id}'),
@@ -211,9 +203,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
   }
 
   void getData() async {
-    await http
-        .get(Uri.parse('${Api.CURR_URL}/meetups/${widget.id}'))
-        .then((res) {
+    await http.get(Uri.parse('${Api.CURR_URL}/meetups/${widget.id}')).then((res) {
       Map<String, dynamic> a = jsonDecode(res.body);
       setState(() {
         md = Meetup(
@@ -230,6 +220,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     int numComing = md.coming.length;
     int blkNum = int.parse(md.location.substring(3));
@@ -243,151 +234,154 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
       attendeesName += ", ";
     }
     attendeesName += md.coming[numComing - 1];
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Details"),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            // Image
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          "assets/locations_meetup/${md.title.toLowerCase()}.jpeg"),
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 20,
-                  right: 10,
-                  child: md.hostname == userName
-                      ? Container(
-                          width: 250,
-                          color: Colors.blue,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 20,
-                          ),
-                          child: Text(
-                            'My Meetup!',
-                            style: TextStyle(
-                              fontSize: 36,
-                              color: Colors.white,
-                            ),
-                            softWrap: true,
-                            overflow: TextOverflow.fade,
-                          ),
-                        )
-                      : md.coming.contains(userName)
-                          ? Container(
-                              width: 250,
-                              color: Colors.green,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 20,
-                              ),
-                              child: Text(
-                                'Attending!',
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  color: Colors.white,
-                                ),
-                                softWrap: true,
-                                overflow: TextOverflow.fade,
-                              ),
-                            )
-                          : Container(),
-                )
-              ],
-            ),
-            Container(
-              child: Text(
-                md.title,
-                style: TextStyle(
-                  fontSize: 36,
-                ),
-              ),
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.all(10),
-            ),
-
-            // Current Pax/Registered
-            DetailRows(
-              "Participant Count: ",
-              numRegistered,
-              md.capacity == numComing ? Colors.red : Colors.black,
-            ),
-
-            // Names of people attending Row
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: md.coming[0] == 'Loading'
+            ? Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              )
+            : Column(
                 children: <Widget>[
-                  Text(
-                    "Registered: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  // Image
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/locations_meetup/${md.title.toLowerCase()}.jpeg"),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 20,
+                        right: 10,
+                        child: md.hostname == userName
+                            ? Container(
+                                width: 250,
+                                color: Colors.blue,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5,
+                                  horizontal: 20,
+                                ),
+                                child: Text(
+                                  'My Meetup!',
+                                  style: TextStyle(
+                                    fontSize: 36,
+                                    color: Colors.white,
+                                  ),
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                ),
+                              )
+                            : md.coming.contains(userName)
+                                ? Container(
+                                    width: 250,
+                                    color: Colors.green,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 20,
+                                    ),
+                                    child: Text(
+                                      'Attending!',
+                                      style: TextStyle(
+                                        fontSize: 36,
+                                        color: Colors.white,
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  )
+                                : Container(),
+                      )
+                    ],
+                  ),
+                  Container(
+                    child: Text(
+                      md.title,
+                      style: TextStyle(
+                        fontSize: 36,
+                      ),
+                    ),
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.all(10),
+                  ),
+
+                  // Current Pax/Registered
+                  DetailRows(
+                    "Participant Count: ",
+                    numRegistered,
+                    md.capacity == numComing ? Colors.red : Colors.black,
+                  ),
+
+                  // Names of people attending Row
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Registered: ",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          attendeesName,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    attendeesName,
-                    style: TextStyle(fontSize: 20),
+
+                  // Location Row
+                  DetailRows(
+                    "Address: ",
+                    "BLK $blkNum",
                   ),
+
+                  DetailRows(
+                    "Date of Event: ",
+                    eventDate,
+                  ),
+
+                  DetailRows(
+                    "Name of Host: ",
+                    hostName.length > 15 ? hostName.replaceRange(14, hostName.length, '...') : hostName,
+                  ),
+
+                  md.coming.contains(userName)
+                      ? Registered(
+                          id: widget.id,
+                          userID: userID,
+                          userName: userName,
+                          numComing: numComing,
+                          owner: md.owner,
+                          attendees: md.coming,
+                          deregisterMeetupHandler: deregisterMeetupHandler,
+                          deleteMeetupHandler: deleteMeetupHandler,
+                          hostname: hostName,
+                        )
+                      : NewRegister(
+                          id: widget.id,
+                          userName: userName,
+                          numComing: numComing,
+                          capacity: md.capacity,
+                          attendees: md.coming,
+                          registerMeetupHandler: registerMeetupHandler,
+                        ),
                 ],
               ),
-            ),
-
-            // Location Row
-            DetailRows(
-              "Address: ",
-              "BLK $blkNum",
-            ),
-
-            DetailRows(
-              "Date of Event: ",
-              eventDate,
-            ),
-
-            DetailRows(
-              "Name of Host: ",
-              hostName.length > 15
-                  ? hostName.replaceRange(14, hostName.length, '...')
-                  : hostName,
-            ),
-
-            md.coming.contains(userName)
-                ? Registered(
-                    id: widget.id,
-                    userID: userID,
-                    userName: userName,
-                    numComing: numComing,
-                    owner: md.owner,
-                    attendees: md.coming,
-                    deregisterMeetupHandler: deregisterMeetupHandler,
-                    deleteMeetupHandler: deleteMeetupHandler,
-                    hostname: hostName,
-                  )
-                : NewRegister(
-                    id: widget.id,
-                    userName: userName,
-                    numComing: numComing,
-                    capacity: md.capacity,
-                    attendees: md.coming,
-                    registerMeetupHandler: registerMeetupHandler,
-                  ),
-          ],
-        ),
       ),
     );
   }

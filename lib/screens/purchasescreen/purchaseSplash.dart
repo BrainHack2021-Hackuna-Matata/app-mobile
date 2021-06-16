@@ -1,13 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import '../../api/static.dart';
-import '../../components/notifier.dart';
-import './mapScreen.dart';
 import './addPurchaseScreen.dart';
 import './viewActivePurchase.dart';
-import 'dart:convert';
+import '../../api/static.dart';
+import '../../components/notifier.dart';
 
 class PurchaseSplash extends StatefulWidget {
   @override
@@ -25,15 +25,10 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
   }
 
   void _getCorrespondingScreen() async {
-    // setState((){
-    //   screenToRender = "";
-    //   firstPost = {};
-    // });
     final int userId = Provider.of<UserNotifier>(context, listen: false).currentUser.id;
     await http.get(Uri.parse('${Api.CURR_URL}/posts/user/$userId')).then((res) {
       Map<String, dynamic> body = jsonDecode(res.body);
       int length = body['length'];
-      print(body);
 
       setState(() {
         if (length == 0) {
@@ -44,8 +39,7 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
         }
       });
     }).catchError((error, stackTrace) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("An error occurred, please try again later")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("An error occurred, please try again later")));
     });
   }
 
@@ -72,8 +66,12 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
         }
       default:
         {
-          return Container(
-            child: Text("Loading"),
+          return Scaffold(
+            appBar: AppBar(title: Text("Purchase")),
+            body: Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
           );
         }
     }
@@ -82,69 +80,6 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
   @override
   Widget build(BuildContext context) {
     _getCorrespondingScreen();
-
     return Container(child: _renderScreen(screenToRender));
-    // return Scaffold(
-    //   body: SafeArea(
-    //     minimum: EdgeInsets.symmetric(horizontal: 20),
-    //     child: Column(
-    //       children: <Widget>[
-    //         Spacer(),
-    //         Text("What would you like to do today?",
-    //             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-    //         SizedBox(height: 20),
-    //         ElevatedButton(
-    //           style: ElevatedButton.styleFrom(
-    //               primary: Colors.lightBlue,
-    //               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-    //               textStyle:
-    //                   TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-    //           onPressed: () {
-    //             Navigator.push(
-    //               context,
-    //               MaterialPageRoute(
-    //                 builder: (context) => AddPurchaseScreen(),
-    //               ), //DEBUG
-    //             );
-    //           },
-    //           child: const Text(
-    //               "I need help buying things\n我需要帮忙买东西\nSaya memerlukan pertolongan untuk membeli barangn\nபொருட்களை வாங்க எனக்கு உதவி தேவை",
-    //               textAlign: TextAlign.right),
-    //         ),
-    //         SizedBox(height: 20),
-    //         ElevatedButton(
-    //           style: ElevatedButton.styleFrom(
-    //               primary: Colors.lightBlue,
-    //               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-    //               textStyle:
-    //                   TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-    //           onPressed: () {
-    //             Navigator.push(
-    //               context,
-    //               // MaterialPageRoute(builder: (context) => ViewActiveCommit(
-    //               //       blkNum: "123A",
-    //               //       helpNeeded: "Food Needed",
-    //               //       dueDate: "2021-06-16 13:57:23.100" ,
-    //               //       name: "Tan Ah Cow",
-    //               //       unit: "#02-22",
-    //               //       image: "assets/purchase_default/meal_default.jpg" ,
-    //               //       details: "rice with lao gan ma",
-    //               //       accepted: true,
-    //               //       fulfilled: false,
-    //               //     )),
-    //               MaterialPageRoute(
-    //                 builder: (context) => MapScreen(),
-    //               ),
-    //             );
-    //           },
-    //           child: const Text(
-    //               "I want to help\n我想帮忙\nSaya ingin membantu\nநான் உதவி செய்ய வேண்டும்",
-    //               textAlign: TextAlign.right),
-    //         ),
-    //         SizedBox(height: 100)
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }
