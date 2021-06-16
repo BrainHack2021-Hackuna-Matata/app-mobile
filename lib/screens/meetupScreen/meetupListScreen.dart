@@ -1,3 +1,4 @@
+import 'package:eldertly_app/api/static.dart';
 import 'package:eldertly_app/models/meetup.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +26,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
   }
 
   void getData() async {
-    await http.get(Uri.parse('http://10.0.2.2:8000/api/meetups')).then((res) {
+    await http.get(Uri.parse('${Api.CURR_URL}/meetups')).then((res) {
       List array = jsonDecode(res.body);
       var formattedArray = array.map((a) {
         return Meetup(

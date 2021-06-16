@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../tabScreen.dart';
 import './authScreen.dart';
+import '../../api/static.dart';
 import '../../models/user.dart';
 import '../../components/notifier.dart';
 
@@ -54,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     };
     await http
         .post(
-      Uri.parse('http://10.0.2.2:8000/api/users'),
+      Uri.parse('${Api.CURR_URL}/users'),
       body: jsonEncode(
         data,
       ),

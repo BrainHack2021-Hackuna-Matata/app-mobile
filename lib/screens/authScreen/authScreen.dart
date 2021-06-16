@@ -6,6 +6,7 @@ import '../tabScreen.dart';
 import './registerScreen.dart';
 import '../../models/user.dart';
 import '../../components/notifier.dart';
+import '../../api/static.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -33,7 +34,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
     await http
         .post(
-      Uri.parse('http://10.0.2.2:8000/api/login'),
+      Uri.parse('${Api.CURR_URL}/login'),
       body: jsonEncode({
         'mobile': mobileController.text,
         'password': passwordController.text,
