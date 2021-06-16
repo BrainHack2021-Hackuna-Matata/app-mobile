@@ -36,8 +36,13 @@ dependencies:
   plugin_platform_interface: ^2.0.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.7.4
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  image_path: 'assets/icons/icon.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
