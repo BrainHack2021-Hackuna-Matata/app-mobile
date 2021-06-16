@@ -29,6 +29,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
     await http.get(Uri.parse('${Api.CURR_URL}/meetups')).then((res) {
       List array = jsonDecode(res.body);
       var formattedArray = array.map((a) {
+        print(array);
         return Meetup(
           id: a['id'],
           title: a['title'],
@@ -45,6 +46,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
       setState(() {
         meetups = formattedArray;
       });
+
     });
   }
 
@@ -57,6 +59,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
   }
 
   Widget build(BuildContext context) {
+    print(meetups);
     return Scaffold(
       appBar: AppBar(title: Consumer<UserNotifier>(builder: (context, user, child) => Text(user.currentUser.mobile))),
       body: ListView.builder(

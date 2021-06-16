@@ -29,10 +29,7 @@ class MapScreenState extends State<MapScreen> {
 
  void getData() async {
     await http.get(Uri.parse('${Api.CURR_URL}/posts')).then((res) {
-      print(res.statusCode);
-      print(res.body);
       List array = jsonDecode(res.body);
-      print(array);
       var formattedArray = array.map((a) {
         
         return Post(
@@ -43,7 +40,7 @@ class MapScreenState extends State<MapScreen> {
           items : a["items"],
           imageurl : a["imageurl"],
           coming : a["coming"],
-          owner : int.parse(a["owner"]),
+          owner : a["owner"],
           created : DateTime.parse(a["created"]),
           due : DateTime.parse(a["due"]),
           fulfilled : a["fulfilled"],
@@ -51,9 +48,10 @@ class MapScreenState extends State<MapScreen> {
           lat : double.parse(a["lat"]),
           long : double.parse(a["long"]),
           unit : a["unit"],
-        );
-      
+        );      
       }).toList();
+      print("hello");
+      print(formattedArray);
       setState(() {
         posts = formattedArray;
       });
@@ -79,7 +77,9 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
 
   @override
   Widget build(BuildContext context) {
+
      for(var i=0;i<posts.length;i++){
+      print("markers");
       markers.add(
       Marker(
       markerId: MarkerId(posts[i].id),
