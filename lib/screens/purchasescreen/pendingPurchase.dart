@@ -1,41 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
-class MapMoreInfo extends StatelessWidget {
+class PendingPurchase extends StatelessWidget {
   final String markerID;
   final double lat;
   final double lng;
   final String blkNum;
   final String helpNeeded;
   final String dueDate; //use Time class?
+  final String name;
   final String unit;
   final String image;
   final String details;
 
-  MapMoreInfo({
+  PendingPurchase({
     required this.markerID,
     required this.lat,
     required this.lng,
     required this.blkNum,
     required this.helpNeeded,
     required this.dueDate,
+    required this.name,    
     required this.unit,
     required this.image,
     required this.details,
   });
 
-  Widget groceryJellybean = Text("Groceries Needed",
-      style: TextStyle(
-          fontSize: 36,
-          backgroundColor: Colors.blue[200],
-          color: Colors.blue[50]));
+Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.blue[200] , color: Colors.blue[50] ));
 
-  Widget mealJellybean = Text("Meal Needed",
-      style: TextStyle(
-          fontSize: 36,
-          backgroundColor: Colors.orange[200],
-          color: Colors.orange[50]));
+Widget mealJellybean = Text("Meal Needed",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +43,7 @@ class MapMoreInfo extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
+                  child: Column(
             children: <Widget>[
               // Help Type
               //////////////CHILD//////////////////////
@@ -55,7 +52,7 @@ class MapMoreInfo extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image), //////////TEMP DEBUG
+                    image: AssetImage(image), //////////TEMP DEBUG 
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -63,8 +60,8 @@ class MapMoreInfo extends StatelessWidget {
               //////////////CHILD//////////////////////
               Container(
                 child: (helpNeeded == "Groceries Needed")
-                    ? groceryJellybean
-                    : mealJellybean,
+                ? groceryJellybean
+                : mealJellybean,
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(10),
               ),
@@ -90,7 +87,7 @@ class MapMoreInfo extends StatelessWidget {
                 ),
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               ),
-              //////////////CHILD//////////////////////
+            //////////////CHILD//////////////////////
               // Due Date
               Container(
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -106,27 +103,51 @@ class MapMoreInfo extends StatelessWidget {
                     Container(
                         child: 
                           Text(
-                            DateFormat('dd MMM – kk:mm').format(DateTime.parse(dueDate)), 
+                            dueDate, /////////////////////////////////////to be changed to time format
                             style: TextStyle(
                               fontSize: 20,
                             ),
                           ),
                         ),
-
-
-                  
-              //
+                        ],
+                      ),
+                    ),
+              // Name
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Requestee: ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                        child: 
+                          Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 20,),
+                          ),
+                        ),
+                      ],
+                    ),      
+              ),
+              //Details
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: Text(
-                  "Details: ",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: 
+                    Text(
+                      "Details: ",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,),
+
+                    ),
               ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -149,20 +170,15 @@ class MapMoreInfo extends StatelessWidget {
                               "Accept",
                               style: TextStyle(fontSize: 30),
                             ),
-                            style: ElevatedButton.styleFrom(
+                             style: ElevatedButton.styleFrom( primary: Colors.red,
                               minimumSize: Size(250, 90),
                             ),
                           ),
                 ),
-                  ],
-      
-              ),
-             
-                ),            
-            ]
-          ),
+              ],
+             ),
         ),
-      ),
-    );
+          ),
+        );
   }
 }

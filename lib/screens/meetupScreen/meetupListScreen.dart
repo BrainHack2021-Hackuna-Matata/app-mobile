@@ -13,7 +13,6 @@ class MeetupListScreen extends StatefulWidget {
   @override
   _MeetupListScreenState createState() => _MeetupListScreenState();
 }
-
 class _MeetupListScreenState extends State<MeetupListScreen> {
   List<dynamic> meetups = [];
 
@@ -41,6 +40,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
       setState(() {
         meetups = formattedArray;
       });
+
     });
   }
 
