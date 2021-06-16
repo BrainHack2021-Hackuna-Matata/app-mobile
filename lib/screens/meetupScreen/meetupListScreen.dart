@@ -41,7 +41,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         );
       }).toList();
       setState(() {
-        print('set state');
         meetups = formattedArray;
       });
 
