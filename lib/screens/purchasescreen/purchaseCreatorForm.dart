@@ -1,6 +1,9 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../components/notifier.dart';
+import 'package:provider/provider.dart';
+import './submitPurchase.dart';
 
 class PurchaseCreatorForm extends StatefulWidget {
   final Function _submitForm;
@@ -56,11 +59,14 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     }
   }
 
-  void _submitForm() {
+  void _submitForm(UserNotifier user) {
     final formState = _formKey.currentState;
+
 
     if (formState!.validate()) {
       formState.save();
+      SubmitPurchase(user,formData['type'],formData['details'],formData['blkNum'],formData['dateTime']); ///settle arguments
+      print("submit stage 1");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
       widget._submitForm(formData);
     }
@@ -74,7 +80,8 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
-              child: Column(
+              child:  Consumer<UserNotifier>(builder: (context, user, child) {
+                return Column( 
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -135,10 +142,13 @@ class _MyFormState extends State<PurchaseCreatorForm> {
               maxLength: 300,
             ),
             
-            ElevatedButton(onPressed: _submitForm, child: Text("Submit"))
+            ElevatedButton(onPressed: ()=>_submitForm(user) , child: Text("Submit"))
           ],
-        ),
-      ),
+                );
+              }
+          )
+        )
+      
     );
   }
 }
