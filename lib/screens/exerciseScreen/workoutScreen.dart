@@ -1,4 +1,3 @@
-import 'package:eldertly_app/components/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
@@ -78,13 +77,13 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         context: context,
         builder: (BuildContext context) => AlertDialog(
                 title: const Text(
-                  'Confirm Register?',
+                  'Confirm Quit Workout?',
                   style: TextStyle(
                     fontSize: 25,
                   ),
                 ),
                 content: const Text(
-                  'Confirm register for this event?',
+                  'Are you sure you want to quit?',
                   style: TextStyle(
                     fontSize: 25,
                   ),
