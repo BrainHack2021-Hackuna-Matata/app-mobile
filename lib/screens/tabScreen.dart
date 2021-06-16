@@ -6,6 +6,7 @@ import './meetupScreen/meetupListScreen.dart';
 import './exerciseScreen/exerciseSelectionsScreen.dart';
 import '../components/notifier.dart';
 import './purchaseScreen/purchaseSplash.dart';
+import './purchaseScreen/mapScreen.dart';
 
 class TabScreen extends StatefulWidget {
   static const routeName = '/tabscreen';
@@ -29,9 +30,17 @@ class _TabScreenState extends State<TabScreen> {
   Widget build(BuildContext context) {
     return Consumer<NavigationNotifier>(
       builder: (context, cart, child) {
-        return Scaffold(
-          bottomNavigationBar: MyAppBar(),
-          body: _pages[cart.currentTabIndex],
+        return Consumer<UserNotifier>(
+          builder: (ctx, user, chld) {
+            return user.currentUser.usertype
+                ? Scaffold(
+                    body: MapScreen(),
+                  )
+                : Scaffold(
+                    bottomNavigationBar: MyAppBar(),
+                    body: _pages[cart.currentTabIndex],
+                  );
+          },
         );
       },
     );
