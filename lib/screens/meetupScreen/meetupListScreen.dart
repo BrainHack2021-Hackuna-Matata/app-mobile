@@ -51,12 +51,16 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
   }
 
   void handleAdd() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Consumer<UserNotifier>(builder: (context, user, child) => Text(user.currentUser.mobile))),
+      appBar: AppBar(
+          title: Consumer<UserNotifier>(
+              builder: (context, user, child) =>
+                  Text(user.currentUser.mobile))),
       body: ListView.builder(
         //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
         padding: const EdgeInsets.only(bottom: 200),

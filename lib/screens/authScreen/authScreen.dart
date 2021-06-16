@@ -69,7 +69,7 @@ class _AuthScreenState extends State<AuthScreen> {
           exp: r['exp'],
         );
         user.setUser(newUser);
-        Navigator.of(context).pushNamed(TabScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
       }
     });
   }
