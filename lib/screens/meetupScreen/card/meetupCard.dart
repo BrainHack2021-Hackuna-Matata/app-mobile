@@ -8,7 +8,6 @@ import './../meetupDetailsScreen.dart';
 class MeetupCard extends StatelessWidget {
   final int id;
   final String title;
-  final String imageurl;
   final String location;
   final int capacity;
   final int currentpax;
@@ -18,7 +17,6 @@ class MeetupCard extends StatelessWidget {
   MeetupCard({
     required this.id,
     required this.title,
-    required this.imageurl,
     required this.location,
     required this.capacity,
     required this.currentpax,
@@ -60,7 +58,8 @@ class MeetupCard extends StatelessWidget {
                       topRight: Radius.circular(15),
                     ),
                     child: Image(
-                      image: AssetImage(imageurl),
+                      image: AssetImage(
+                          "assets/locations_meetup/${title.toLowerCase()}.jpeg"),
                       height: 250,
                       width: double.infinity,
                       fit: BoxFit.cover,
