@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../tabScreen.dart';
+
 class EndExerciseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Exercise'),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               "GOOD JOB!",
@@ -26,7 +33,12 @@ class EndExerciseScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: ElevatedButton(
-                onPressed: null,
+                onPressed: () => Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TabScreen(),
+                    ),
+                    (route) => false),
                 child: Text(
                   'Back to home',
                   style: TextStyle(
