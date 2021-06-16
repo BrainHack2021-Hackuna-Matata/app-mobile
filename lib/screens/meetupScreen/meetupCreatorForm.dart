@@ -1,6 +1,9 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../components/notifier.dart';
 
 class MeetupCreatorForm extends StatefulWidget {
   final Function _submitForm;
@@ -15,11 +18,24 @@ class MeetupCreatorForm extends StatefulWidget {
 class _MyFormState extends State<MeetupCreatorForm> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> formData = {
-    'postalCode': '',
-    'type': '',
-    'capacity': 0,
-    'dateTime': '',
+    "location": "",
+    "title": "",
+    "capacity": 0,
+    "due": "",
+    "coming": <String>[],
+    "hostname": "",
+    "owner": 0,
   };
+
+  @override
+  void didChangeDependencies() {
+    final String name = Provider.of<UserNotifier>(context).currentUser.name;
+    final int id = Provider.of<UserNotifier>(context).currentUser.id;
+    formData['hostname'] = name;
+    formData['coming'].add(name);
+    formData['owner'] = id;
+    super.didChangeDependencies();
+  }
 
   var _dropdownOption = "Cards";
 
@@ -58,7 +74,6 @@ class _MyFormState extends State<MeetupCreatorForm> {
 
     if (formState!.validate()) {
       formState.save();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
     }
     // Submit form API call
     widget._submitForm(formData);
@@ -76,7 +91,7 @@ class _MyFormState extends State<MeetupCreatorForm> {
           TextFormField(
             validator: _postalCodeValidator,
             onSaved: (String? value) {
-              formData['postalCode'] = value;
+              formData['location'] = value;
             },
             decoration: InputDecoration(
               labelText: "Location (Postal code)",
@@ -94,7 +109,7 @@ class _MyFormState extends State<MeetupCreatorForm> {
               });
             },
             onSaved: (String? value) {
-              formData['type'] = value;
+              formData['title'] = value;
             },
             decoration: InputDecoration(labelText: "Type"),
           ),
@@ -124,7 +139,7 @@ class _MyFormState extends State<MeetupCreatorForm> {
             },
             validator: _dateTimeValidator,
             onSaved: (DateTime? value) {
-              formData['dateTime'] = value!.toIso8601String();
+              formData['due'] = value!.toIso8601String();
             },
             decoration: InputDecoration(labelText: "Date and Time"),
           ),
