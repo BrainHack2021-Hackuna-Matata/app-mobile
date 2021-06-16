@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import "package:intl/intl.dart";
 import 'package:http/http.dart' as http;
 
 import '../../api/static.dart';
-//markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
 class ViewActivePurchase extends StatelessWidget {
   final int id;
@@ -78,8 +78,7 @@ class ViewActivePurchase extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/purchase_default/groceries_default.jpg'), //////////TEMP DEBUG
+                    image: AssetImage('assets/purchase_default/groceries_default.jpg'), //////////TEMP DEBUG
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -121,7 +120,7 @@ class ViewActivePurchase extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "Needed By: ",
+                      "Need By: ",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -129,7 +128,7 @@ class ViewActivePurchase extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        dueDate, /////////////////////////////////////to be changed to time format
+                        DateFormat("MMM dd hh:mm aa").format(DateTime.parse(dueDate)), /////////////////////////////////////to be changed to time format
                         style: TextStyle(
                           fontSize: 20,
                         ),

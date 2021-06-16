@@ -25,17 +25,9 @@ class MapMoreInfo extends StatelessWidget {
     required this.details,
   });
 
-  Widget groceryJellybean = Text("Groceries Needed",
-      style: TextStyle(
-          fontSize: 36,
-          backgroundColor: Colors.blue[200],
-          color: Colors.blue[50]));
+  Widget groceryJellybean = Text("Groceries Needed", style: TextStyle(fontSize: 36, backgroundColor: Colors.blue[200], color: Colors.blue[50]));
 
-  Widget mealJellybean = Text("Meal Needed",
-      style: TextStyle(
-          fontSize: 36,
-          backgroundColor: Colors.orange[200],
-          color: Colors.orange[50]));
+  Widget mealJellybean = Text("Meal Needed", style: TextStyle(fontSize: 36, backgroundColor: Colors.orange[200], color: Colors.orange[50]));
 
   @override
   Widget build(BuildContext context) {
@@ -44,105 +36,98 @@ class MapMoreInfo extends StatelessWidget {
         centerTitle: true,
         title: Text("Details"),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              // Help Type
-              //////////////CHILD//////////////////////
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(image), //////////TEMP DEBUG
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
+      body: Column(
+        children: <Widget>[
+          // Help Type
+          //////////////CHILD//////////////////////
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(image), //////////TEMP DEBUG
+                fit: BoxFit.fitWidth,
               ),
-              //////////////CHILD//////////////////////
-              Container(
-                child: (helpNeeded == "Groceries Needed")
-                    ? groceryJellybean
-                    : mealJellybean,
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.all(10),
-              ),
-              //////////////CHILD//////////////////////
-              // Blk
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "Location: ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "BLK $blkNum",
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              ),
-              //////////////CHILD//////////////////////
-              // Due Date
-              Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "Needed By: ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      child: Text(
-                        DateFormat('dd MMM – kk:mm')
-                            .format(DateTime.parse(dueDate)),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              //
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: Text(
-                  "Details: ",
-                  textAlign: TextAlign.left,
+            ),
+          ),
+          //////////////CHILD//////////////////////
+          Container(
+            child: (helpNeeded == "Groceries Needed") ? groceryJellybean : mealJellybean,
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.all(10),
+          ),
+          //////////////CHILD//////////////////////
+          // Blk
+          Container(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Location: ",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  details,
-                  textAlign: TextAlign.left,
+                Text(
+                  "BLK $blkNum",
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
           ),
-        ),
+          //////////////CHILD//////////////////////
+          // Due Date
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Need by: ",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    DateFormat('dd MMM hh:mm aa').format(DateTime.parse(dueDate)),
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+            child: Text(
+              "Details: ",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              details,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

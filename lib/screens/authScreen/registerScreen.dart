@@ -1,15 +1,18 @@
+import 'dart:convert';
+
 import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:provider/provider.dart';
-import '../tabScreen.dart';
+
 import './authScreen.dart';
 import '../../api/static.dart';
-import '../../models/user.dart';
 import '../../components/notifier.dart';
+import '../../models/user.dart';
+import '../tabScreen.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/register';
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -27,56 +30,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _postalerror = false;
 
   void register(UserNotifier user) async {
-    if (mobileController.text == '' ||
-        passwordController.text == '' ||
-        postalController.text == '' ||
-        nameController.text == '') {
+    if (mobileController.text == '' || passwordController.text == '' || postalController.text == '' || nameController.text == '') {
       setState(() {
         _notext = true;
       });
       return;
     }
-    await http
-        .get(Uri.parse(
-            'https://developers.onemap.sg/commonapi/search?searchVal=${postalController.text}&returnGeom=Y&getAddrDetails=Y&pageNum=1'))
-        .then((res) {
+    await http.get(Uri.parse('https://developers.onemap.sg/commonapi/search?searchVal=${postalController.text}&returnGeom=Y&getAddrDetails=Y&pageNum=1')).then((res) {
       var data = jsonDecode(res.body);
       lat = double.parse(data['results'][0]['LATITUDE']);
       long = double.parse(data['results'][0]['LONGITUDE']);
       setState(() {
         _postalerror = false;
       });
-    }).catchError((error) {
-      setState(() {
-        _postalerror = true;
-      });
-      showDialog<String>(
+    }).catchError(
+      (error) {
+        setState(() {
+          _postalerror = true;
+        });
+        showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-                  title: const Text(
-                    'Invalid Postal Code',
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
+            title: const Text(
+              'Invalid Postal Code',
+              style: TextStyle(
+                fontSize: 25,
+              ),
+            ),
+            content: const Text(
+              'Please ensure that the postal code you have entered is a correct one.',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    fontSize: 20,
                   ),
-                  content: const Text(
-                    'Please ensure that the postal code you have entered is a correct one.',
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'OK'),
-                      child: const Text(
-                        'OK',
-                        style: TextStyle(
-                          fontSize: 25,
-                        ),
-                      ),
-                    )
-                  ]));
-    });
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
     if (_postalerror) {
       return;
     }
@@ -92,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'long': double.parse(long.toStringAsFixed(5)),
       'exp': 0,
     };
+
     await http
         .post(
       Uri.parse('${Api.CURR_URL}/users'),
@@ -99,25 +101,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
         data,
       ),
     )
-        .then((res) {
-      var r = jsonDecode(res.body);
-      var newUser = User(
-        id: r['id'],
-        name: r['name'],
-        mobile: r['mobile'],
-        password: r['password'],
-        postal: r['postal'],
-        unit: r['unit'],
-        usertype: r['usertype'],
-        block: r['block'],
-        lat: double.parse(r['lat']),
-        long: double.parse(r['long']),
-        exp: r['exp'],
-      );
-      user.setUser(newUser);
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
-    });
+        .then(
+      (res) {
+        var r = jsonDecode(res.body);
+        var newUser = User(
+          id: r['id'],
+          name: r['name'],
+          mobile: r['mobile'],
+          password: r['password'],
+          postal: r['postal'],
+          unit: r['unit'],
+          usertype: r['usertype'],
+          block: r['block'],
+          lat: double.parse(r['lat']),
+          long: double.parse(r['long']),
+          exp: r['exp'],
+        );
+        user.setUser(newUser);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
+      },
+    );
   }
 
   @override
@@ -126,8 +130,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     mobileController.text = loginData.mobile;
     passwordController.text = loginData.password;
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(10),
+      appBar: AppBar(title: Text("Register")),
+      body: SafeArea(
+        minimum: EdgeInsets.fromLTRB(10,0,10,0),
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -209,7 +214,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(10),
                   child: TextField(
-                    keyboardType: TextInputType.number,
                     controller: unitController,
                     decoration: InputDecoration(
                       errorStyle: TextStyle(),
@@ -220,6 +224,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
                       child: SizedBox(
@@ -227,14 +232,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: ListTile(
                           title: const Text('Elderly'),
                           leading: Radio(
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             value: false,
                             groupValue: _usertype,
                             onChanged: (value) {
-                              setState(
-                                () {
-                                  _usertype = value as bool;
-                                },
-                              );
+                              setState(() {
+                                _usertype = value as bool;
+                              });
                             },
                           ),
                         ),
@@ -246,14 +250,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: ListTile(
                           title: const Text('GroupBuyer'),
                           leading: Radio(
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             value: true,
                             groupValue: _usertype,
                             onChanged: (value) {
-                              setState(
-                                () {
-                                  _usertype = value as bool;
-                                },
-                              );
+                              setState(() {
+                                _usertype = value as bool;
+                              });
                             },
                           ),
                         ),
@@ -265,8 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 50,
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   width: double.infinity,
-                  child:
-                      Consumer<UserNotifier>(builder: (context, user, child) {
+                  child: Consumer<UserNotifier>(builder: (context, user, child) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         onPrimary: Colors.white,
