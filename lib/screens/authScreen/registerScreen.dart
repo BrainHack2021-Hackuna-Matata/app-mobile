@@ -116,6 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         exp: r['exp'],
       );
       user.setUser(newUser);
+      Navigator.of(context).popUntil((route) => route.isFirst);
       Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
     });
   }
