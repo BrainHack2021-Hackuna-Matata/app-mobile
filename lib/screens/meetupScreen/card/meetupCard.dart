@@ -212,7 +212,9 @@ class MeetupCard extends StatelessWidget {
                           width: 6,
                         ),
                         Text(
-                          '$hostname',
+                          hostname.length > 8
+                              ? hostname.replaceRange(7, hostname.length, '...')
+                              : hostname,
                           style: TextStyle(
                             fontSize: 26,
                           ),
