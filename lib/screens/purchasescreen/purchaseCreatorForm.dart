@@ -66,12 +66,11 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     if (formState!.validate()) {
       formState.save();
       SubmitPurchase(user,formData['type'],formData['details'],formData['blkNum'],formData['dateTime']); ///settle arguments
-      print("submit stage 1");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
       widget._submitForm(formData);
     }
     // Submit form API call
-    
+
     // print(formData);
   }
 
@@ -81,7 +80,7 @@ class _MyFormState extends State<PurchaseCreatorForm> {
       key: _formKey,
       child: SingleChildScrollView(
               child:  Consumer<UserNotifier>(builder: (context, user, child) {
-                return Column( 
+                return Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -141,14 +140,14 @@ class _MyFormState extends State<PurchaseCreatorForm> {
               maxLines: 8,
               maxLength: 300,
             ),
-            
+
             ElevatedButton(onPressed: ()=>_submitForm(user) , child: Text("Submit"))
           ],
                 );
               }
           )
         )
-      
+
     );
   }
 }

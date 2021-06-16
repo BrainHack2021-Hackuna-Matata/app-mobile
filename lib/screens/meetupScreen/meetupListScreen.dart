@@ -56,7 +56,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
   }
 
   Widget build(BuildContext context) {
-    print(meetups);
     return Scaffold(
       appBar: AppBar(
           title: Consumer<UserNotifier>(

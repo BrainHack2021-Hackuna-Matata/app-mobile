@@ -47,7 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _postalerror = false;
       });
     }).catchError((error) {
-      print('Postal Code Not Found...');
       setState(() {
         _postalerror = true;
       });

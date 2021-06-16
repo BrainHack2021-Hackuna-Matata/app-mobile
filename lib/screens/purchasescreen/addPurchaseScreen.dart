@@ -11,7 +11,6 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
     Future.delayed(Duration(seconds: 1), () {
       Navigator.pop(context);
     });
-    print(form);
   }
 
   @override
