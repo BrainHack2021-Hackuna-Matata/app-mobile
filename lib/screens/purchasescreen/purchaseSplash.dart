@@ -29,7 +29,8 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
     //   screenToRender = "";
     //   firstPost = {};
     // });
-    final int userId = Provider.of<UserNotifier>(context, listen: false).currentUser.id;
+    final int userId =
+        Provider.of<UserNotifier>(context, listen: false).currentUser.id;
     await http.get(Uri.parse('${Api.CURR_URL}/posts/user/$userId')).then((res) {
       Map<String, dynamic> body = jsonDecode(res.body);
       int length = body['length'];
@@ -73,8 +74,12 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
       default:
         {
           return Container(
-            child: Text("Loading"),
-          );
+              child: Center(
+            child: Text(
+              "Loading... \nPlease Wait!",
+              style: TextStyle(fontSize: 20),
+            ),
+          ));
         }
     }
   }
