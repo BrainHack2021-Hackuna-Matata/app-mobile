@@ -73,24 +73,31 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
         centerTitle: true,
       ),
 
-      body: ListView.builder(
-        //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
-        padding: const EdgeInsets.only(bottom: 200),
-        itemBuilder: (ctx, index) {
-          return MeetupCard(
-            id: meetups[index].id,
-            title: meetups[index].title,
-            location: meetups[index].location,
-            capacity: meetups[index].capacity,
-            currentpax: meetups[index].coming.length,
-            attendees: meetups[index].coming,
-            date: meetups[index].date,
-            hostname: meetups[index].hostname,
-            getData: handleRefresh,
-          );
-        },
-        itemCount: meetups.length,
-      ),
+      body: meetups.length != 0
+          ? ListView.builder(
+              //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
+              padding: const EdgeInsets.only(bottom: 200),
+              itemBuilder: (ctx, index) {
+                return MeetupCard(
+                  id: meetups[index].id,
+                  title: meetups[index].title,
+                  location: meetups[index].location,
+                  capacity: meetups[index].capacity,
+                  currentpax: meetups[index].coming.length,
+                  attendees: meetups[index].coming,
+                  date: meetups[index].date,
+                  hostname: meetups[index].hostname,
+                  getData: handleRefresh,
+                );
+              },
+              itemCount: meetups.length,
+            )
+          : Center(
+              child: Text(
+                "No meetup found.\nClick on '+' button to add a meetup",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
       //Adding two FloatingActionButtons into meetuplistscreen
       floatingActionButton: Stack(
         children: <Widget>[
