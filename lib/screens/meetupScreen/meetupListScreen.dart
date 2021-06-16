@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
+import '../../api/static.dart';
+import '../../models/meetup.dart';
+import '../../components/notifier.dart';
 import 'card/meetupCard.dart';
-import 'addMeetupScreen.dart';
-import '../../fakemeetups.dart';
+import 'meetupCreatorScreen.dart';
 
 class MeetupListScreen extends StatefulWidget {
   const MeetupListScreen({Key? key}) : super(key: key);
@@ -12,9 +17,39 @@ class MeetupListScreen extends StatefulWidget {
 }
 
 class _MeetupListScreenState extends State<MeetupListScreen> {
-  final meetups = FAKE_MEETUPS;
-  void handleRefresh() {
-    setState(() {});
+  List<dynamic> meetups = [];
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void getData() async {
+    await http.get(Uri.parse('${Api.CURR_URL}/meetups')).then((res) {
+      List array = jsonDecode(res.body);
+      var formattedArray = array.map((a) {
+        return Meetup(
+          id: a['id'],
+          title: a['title'],
+          description: a['description'],
+          location: a['location'],
+          capacity: a['capacity'],
+          imageurl: a['imageurl'],
+          date: DateTime.parse(a['due']),
+          coming: a['coming'],
+          owner: a['owner'],
+          hostname: a['hostname'],
+        );
+      }).toList();
+      setState(() {
+        meetups = formattedArray;
+      });
+    });
+  }
+
+  void handleRefresh() async {
+    getData();
   }
 
   void handleAdd() {
@@ -23,9 +58,7 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Meetups"),
-      ),
+      appBar: AppBar(title: Consumer<UserNotifier>(builder: (context, user, child) => Text(user.currentUser.mobile))),
       body: ListView.builder(
         //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
         padding: const EdgeInsets.only(bottom: 200),
@@ -38,6 +71,8 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
             capacity: meetups[index].capacity,
             currentpax: meetups[index].coming.length,
             attendees: meetups[index].coming,
+            date: meetups[index].date,
+            hostname: meetups[index].hostname,
           );
         },
         itemCount: meetups.length,

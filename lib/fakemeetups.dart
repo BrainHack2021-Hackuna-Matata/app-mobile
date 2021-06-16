@@ -2,7 +2,9 @@ import './models/meetup.dart';
 
 //Can dleete this once setup si don
 
-const FAKE_MEETUPS = const [
+DateTime randomdate = DateTime.fromMillisecondsSinceEpoch(1623803158);
+
+var FAKE_MEETUPS = [
   Meetup(
     id: 1,
     title: 'Chess',
@@ -10,11 +12,13 @@ const FAKE_MEETUPS = const [
     location: '654423',
     capacity: 2,
     imageurl: 'assets/locations_meetup/chess.jpeg',
+    date: randomdate,
     coming: [
       'Bob',
       'Ali',
     ],
     owner: 1,
+    hostname: "Bob",
   ),
   Meetup(
     id: 2,
@@ -23,10 +27,12 @@ const FAKE_MEETUPS = const [
     location: '654321',
     capacity: 4,
     imageurl: 'assets/locations_meetup/cards.JPG',
+    date: randomdate,
     coming: [
       'Bob',
     ],
     owner: 1,
+    hostname: "Bob",
   ),
   Meetup(
     id: 3,
@@ -35,12 +41,14 @@ const FAKE_MEETUPS = const [
     location: '654001',
     capacity: 4,
     imageurl: 'assets/locations_meetup/mahjong.jpeg',
+    date: randomdate,
     coming: [
       'Bob',
       'Ali',
       'Cock',
     ],
     owner: 1,
+    hostname: "Bob",
   ),
   Meetup(
     id: 4,
@@ -49,11 +57,13 @@ const FAKE_MEETUPS = const [
     location: '654021',
     capacity: 4,
     imageurl: 'assets/locations_meetup/mahjong.jpeg',
+    date: randomdate,
     coming: [
       'Bobob Bob Bob Bob',
       'Ali Ali Ali Ali Ali Ali Ali',
       'Cock Cock CoCk COck COck Cok',
     ],
     owner: 1,
+    hostname: "Bob",
   ),
 ];

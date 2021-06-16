@@ -14,7 +14,7 @@ class UserNotifier extends ChangeNotifier {
   User currentUser = User(
     id: -1,
     name: '.',
-    mobile: '91234567',
+    mobile: '.',
     password: '.',
     usertype: false,
     block: '.',
@@ -30,4 +30,3 @@ class UserNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
-

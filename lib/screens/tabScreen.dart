@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../components/navigationBar.dart';
 import './meetupScreen/meetupListScreen.dart';
 import './exerciseScreen/exerciseSelectionsScreen.dart';
-import './homeScreen/homeScreen.dart';
 import '../components/notifier.dart';
 import './purchaseScreen/purchaseSplash.dart';
 
@@ -19,7 +18,6 @@ class _TabScreenState extends State<TabScreen> {
   @override
   void initState() {
     _pages = [
-      HomeScreen(),
       MeetupListScreen(),
       PurchaseSplash(),
       ExerciseSelectionsScreen(),

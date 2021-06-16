@@ -25,10 +25,6 @@ class _MyAppBarState extends State<MyAppBar> {
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.people),
               label: 'Meetup',
             ),
