@@ -30,11 +30,11 @@ class _MyAppBarState extends State<MyAppBar> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.local_grocery_store_outlined),
-              label: 'Purchase',
+              label: 'Groupbuy',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.fitness_center),
-              label: 'Exercise',
+              label: 'Workout',
             ),
           ],
           currentIndex: cart.currentTabIndex,

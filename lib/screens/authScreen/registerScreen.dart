@@ -87,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'password': passwordController.text,
       'postal': postalController.text,
       'unit': unitController.text,
-      'usertype': false,
+      'usertype': _usertype,
       'block': postalController.text.substring(3),
       'lat': double.parse(lat.toStringAsFixed(5)),
       'long': double.parse(long.toStringAsFixed(5)),
@@ -273,7 +273,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: ElevatedButton.styleFrom(
                         onPrimary: Colors.white,
                       ),
-                      child: Text('Register'),
+                      child: Text('Register',
+                          style: TextStyle(
+                            fontSize: 20,
+                          )),
                       onPressed: () async => register(user),
                     );
                   }),

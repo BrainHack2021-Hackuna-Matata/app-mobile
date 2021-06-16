@@ -1,7 +1,9 @@
-import './purchaseCreatorForm.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+
+import './purchaseCreatorForm.dart';
 import '../../api/static.dart';
 
 class AddPurchaseScreen extends StatefulWidget {
@@ -17,17 +19,11 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
   void _submitFormHandler(Map<String, dynamic> form) async {
     String jsonStringForm = jsonEncode(form);
 
-    await http
-        .post(Uri.parse("${Api.CURR_URL}/posts"), body: jsonStringForm)
-        .then((res) {
-          print(res.statusCode);
-          print(res.body);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Submitted")));
+    await http.post(Uri.parse("${Api.CURR_URL}/posts"), body: jsonStringForm).then((res) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
       widget._refreshSplashScreen();
     }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("An error occurred, please try again later")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("An error occurred, please try again later")));
     });
   }
 

@@ -25,12 +25,17 @@ class MapMoreInfo extends StatelessWidget {
     required this.details,
   });
 
-Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
-              fontSize: 36, backgroundColor: Colors.blue[200] , color: Colors.blue[50] ));
+  Widget groceryJellybean = Text("Groceries Needed",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.blue[200],
+          color: Colors.blue[50]));
 
-Widget mealJellybean = Text("Meal Needed",style: TextStyle(
-              fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
-
+  Widget mealJellybean = Text("Meal Needed",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.orange[200],
+          color: Colors.orange[50]));
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
       ),
       body: Center(
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: <Widget>[
               // Help Type
               //////////////CHILD//////////////////////
@@ -50,7 +55,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image), //////////TEMP DEBUG 
+                    image: AssetImage(image), //////////TEMP DEBUG
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -58,8 +63,8 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
               //////////////CHILD//////////////////////
               Container(
                 child: (helpNeeded == "Groceries Needed")
-                ? groceryJellybean
-                : mealJellybean,
+                    ? groceryJellybean
+                    : mealJellybean,
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(10),
               ),
@@ -85,7 +90,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                 ),
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               ),
-            //////////////CHILD//////////////////////
+              //////////////CHILD//////////////////////
               // Due Date
               Container(
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -99,61 +104,46 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                       ),
                     ),
                     Container(
-                        child: 
-                          Text(
-                            DateFormat('dd MMM – kk:mm').format(DateTime.parse(dueDate)), 
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
+                      child: Text(
+                        DateFormat('dd MMM – kk:mm')
+                            .format(DateTime.parse(dueDate)),
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
-                        ],
                       ),
                     ),
+                  ],
+                ),
+              ),
               //
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: 
-                    Text(
-                      "Details: ",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,),
-
-                    ),
-              ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                    width: MediaQuery.of(context).size.width,
-                        child:  
-                          Text(
-                            details,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 20,),
-                          ), 
-
-                        ),
-                  Padding(
-                          padding: EdgeInsets.all(25),
-                          child: ElevatedButton(
-                            onPressed: (){},
-                            child: Text(
-                              "Accept",
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(250, 90),
-                            ),
-                          ),
+                child: Text(
+                  "Details: ",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ],
-             ),
-        ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  details,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
           ),
-        );
+        ),
+      ),
+    );
   }
 }

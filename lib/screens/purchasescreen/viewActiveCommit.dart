@@ -20,6 +20,7 @@ class ViewActiveCommit extends StatelessWidget {
   final double long;
   final bool accepted;
   final bool fulfilled;
+  final Function getinfo;
 
   ViewActiveCommit({
     required this.id,
@@ -33,6 +34,7 @@ class ViewActiveCommit extends StatelessWidget {
     required this.long,
     required this.accepted,
     required this.fulfilled,
+    required this.getinfo,
   });
 
   Widget groceryJellybean = Text("Groceries Needed",
@@ -252,8 +254,10 @@ class ViewActiveCommit extends StatelessWidget {
                                     ),
                                     actions: <Widget>[
                                       TextButton(
-                                        onPressed: (){Navigator.pop(context,'Yes');
-                                            Navigator.pop(context);},/////////////////TODO: actually delete request
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Yes');
+                                          Navigator.pop(context);
+                                        }, /////////////////TODO: actually delete request
                                         child: const Text(
                                           'Yes',
                                           style: TextStyle(
@@ -302,8 +306,13 @@ class ViewActiveCommit extends StatelessWidget {
                                     ),
                                     actions: <Widget>[
                                       TextButton(
-                                        onPressed: () {Navigator.pop(context,'Yes') ;
-                                            Navigator.pop(context);}, ////////////TODO set to fulfilled
+                                        onPressed: () async {
+                                          Navigator.pop(context, 'Yes');
+                                          Navigator.pop(context);
+                                          await http.delete(Uri.parse(
+                                              '${Api.CURR_URL}/posts/${id}'));
+                                          await getinfo();
+                                        },
                                         child: const Text(
                                           'Yes',
                                           style: TextStyle(

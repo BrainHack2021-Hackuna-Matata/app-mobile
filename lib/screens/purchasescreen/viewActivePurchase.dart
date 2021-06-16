@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import "package:intl/intl.dart";
+import 'package:http/http.dart' as http;
+
+import '../../api/static.dart';
 
 class ViewActivePurchase extends StatelessWidget {
   final int id;
@@ -27,15 +30,35 @@ class ViewActivePurchase extends StatelessWidget {
     required this.refreshSplashScreen,
   });
 
-  Widget groceryJellybean = Text("Groceries Needed", style: TextStyle(fontSize: 36, backgroundColor: Colors.blue[200], color: Colors.blue[50]));
+  Widget groceryJellybean = Text("Groceries Needed",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.blue[200],
+          color: Colors.blue[50]));
 
-  Widget mealJellybean = Text("Meal Needed", style: TextStyle(fontSize: 36, backgroundColor: Colors.orange[200], color: Colors.orange[50]));
+  Widget mealJellybean = Text("Meal Needed",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.orange[200],
+          color: Colors.orange[50]));
 
-  Widget waitingJellybean = Text("Pending Accept", style: TextStyle(fontSize: 36, backgroundColor: Colors.yellow[200], color: Colors.black));
+  Widget waitingJellybean = Text("Pending Accept",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.yellow[200],
+          color: Colors.black));
 
-  Widget acceptedJellybean = Text("Accepted", style: TextStyle(fontSize: 36, backgroundColor: Colors.green[200], color: Colors.green[50]));
+  Widget acceptedJellybean = Text("Accepted",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.green[200],
+          color: Colors.green[50]));
 
-  Widget fulfilledJellybean = Text("Fulfilled", style: TextStyle(fontSize: 36, backgroundColor: Colors.purple[200], color: Colors.purple[50]));
+  Widget fulfilledJellybean = Text("Fulfilled",
+      style: TextStyle(
+          fontSize: 36,
+          backgroundColor: Colors.purple[200],
+          color: Colors.purple[50]));
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +85,9 @@ class ViewActivePurchase extends StatelessWidget {
               ),
               //////////////CHILD//////////////////////
               Container(
-                child: (helpNeeded == "Groceries Needed") ? groceryJellybean : mealJellybean,
+                child: (helpNeeded == "Groceries Needed")
+                    ? groceryJellybean
+                    : mealJellybean,
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(10),
               ),
@@ -195,8 +220,11 @@ class ViewActivePurchase extends StatelessWidget {
                                 ),
                                 actions: <Widget>[
                                   TextButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       Navigator.pop(context, 'Yes');
+                                      await http.delete(Uri.parse(
+                                          '${Api.CURR_URL}/posts/${id}'));
+                                      refreshSplashScreen();
                                     },
                                     child: const Text(
                                       'Yes',
@@ -206,7 +234,8 @@ class ViewActivePurchase extends StatelessWidget {
                                     ),
                                   ),
                                   TextButton(
-                                    onPressed: () => Navigator.pop(context, 'No'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'No'),
                                     child: const Text(
                                       'No',
                                       style: TextStyle(
@@ -216,7 +245,8 @@ class ViewActivePurchase extends StatelessWidget {
                                   )
                                 ]));
                   },
-                  style: ElevatedButton.styleFrom(minimumSize: Size(250, 90), primary: Colors.red),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size(250, 90), primary: Colors.red),
                 ),
               ),
             ],

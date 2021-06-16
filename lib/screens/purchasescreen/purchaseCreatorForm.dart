@@ -24,7 +24,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     'description': '',
     'location': '', //block
     'name': '',
-    //'coming' : '', //groupbuyer name
     'owner': -1,
     'due': '',
     'fulfilled': false,
@@ -49,16 +48,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     super.didChangeDependencies();
   }
 
-  String? _blkNumValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Blk Number Required";
-    } else if (value.contains('blk') || value.contains('Blk') || value.contains('block') || value.contains('Block') || value.contains('BLK')) {
-      return "Please enter only the Block Number (without 'Blk'))";
-    } else {
-      return null;
-    }
-  }
-
   String? _dateTimeValidator(DateTime? value) {
     if (value == null) {
       return "Date time required";
@@ -74,8 +63,8 @@ class _MyFormState extends State<PurchaseCreatorForm> {
       return "Enter details of your request";
     } else if (value.length < 12) {
       return "Please enter more details";
-    } else if (value.length > 400) {
-      return "Please enter more details";
+    } else if (value.length > 200) {
+      return "Please enter less details";
     } else {
       return null;
     }
@@ -88,9 +77,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
       formState.save();
       widget._submitForm(formData);
     }
-    // Submit form API call
-
-    // print(formData);
   }
 
   @override
@@ -154,8 +140,8 @@ class _MyFormState extends State<PurchaseCreatorForm> {
                     ),
                   ),
                   keyboardType: TextInputType.multiline,
-                  maxLines: 8,
-                  maxLength: 300,
+                  maxLines: 6,
+                  maxLength: 200,
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(onPressed: () => _submitForm(user), child: Text("Submit"))
