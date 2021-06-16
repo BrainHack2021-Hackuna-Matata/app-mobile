@@ -135,17 +135,18 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: 50,
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   width: double.infinity,
-                  child:
-                      Consumer<UserNotifier>(builder: (context, user, child) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        onPrimary: Colors.white,
-                      ),
-                      child: Text('Login'),
-                      onPressed: () async => clickLogin(user),
-                    );
-                  }),
+                  child: Consumer<UserNotifier>(
+                    builder: (context, user, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          onPrimary: Colors.white,
+                        ),
+                        child: Text('Continue'),
+                        onPressed: () async => clickLogin(user),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

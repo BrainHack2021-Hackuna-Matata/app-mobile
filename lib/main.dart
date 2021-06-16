@@ -9,7 +9,6 @@ import './screens/meetupScreen/meetupListScreen.dart';
 import './screens/purchasescreen/purchaseSplash.dart';
 import './screens/tabScreen.dart';
 
-
 void main() {
   runApp(
     MultiProvider(
@@ -37,8 +36,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: widget._title,
       theme: ThemeData(primarySwatch: Colors.amber),
-      // home: AuthScreen(),
-      home: TabScreen(),
+      home: AuthScreen(),
       initialRoute: "/",
       routes: {
         "/meet": (context) => MeetupListScreen(),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/user.dart';
+import '../../components/notifier.dart';
 
 class MeetupDetailsScreen extends StatefulWidget {
   final String title;
