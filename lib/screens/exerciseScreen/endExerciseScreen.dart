@@ -13,17 +13,20 @@ class EndExerciseScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "GOOD JOB!",
+              "Congratulations!",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 25,
               ),
             ),
+            SizedBox(
+              height: 20.0,
+            ),
             Text(
-              "Exercise Complete!",
+              "You have completed your workout!",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 25,
               ),
             ),
             Padding(
@@ -38,7 +41,7 @@ class EndExerciseScreen extends StatelessWidget {
                 child: Text(
                   'Back to home',
                   style: TextStyle(
-                    fontSize: 36,
+                    fontSize: 30,
                   ),
                 ),
               ),
