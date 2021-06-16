@@ -36,6 +36,8 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
 
   String userName = "";
 
+  int userID = -999;
+
   @override
   void initState() {
     getData();
@@ -45,6 +47,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
   @override
   void didChangeDependencies() {
     userName = Provider.of<UserNotifier>(context).currentUser.name;
+    userID = Provider.of<UserNotifier>(context).currentUser.id;
     super.didChangeDependencies();
   }
 
@@ -59,7 +62,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                   ),
                 ),
                 content: const Text(
-                  'Confirm register for this event?',
+                  'Are you sure you want to register for this event?',
                   style: TextStyle(
                     fontSize: 25,
                   ),
@@ -107,13 +110,13 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
         context: context,
         builder: (BuildContext context) => AlertDialog(
                 title: const Text(
-                  'Confirm De-Register?',
+                  'Confirm Unregister?',
                   style: TextStyle(
                     fontSize: 25,
                   ),
                 ),
                 content: const Text(
-                  'Confirm de-register from this event?',
+                  'Are you sure you want to unregister for this event?',
                   style: TextStyle(
                     fontSize: 25,
                   ),
@@ -168,7 +171,7 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
                   ),
                 ),
                 content: const Text(
-                  'Delete this event? This action cannot be undone!',
+                  'Are you sure you want to delete this event?',
                   style: TextStyle(
                     fontSize: 25,
                   ),
@@ -366,8 +369,10 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
             md.coming.contains(userName)
                 ? Registered(
                     id: widget.id,
+                    userID: userID,
                     userName: userName,
                     numComing: numComing,
+                    owner: md.owner,
                     attendees: md.coming,
                     deregisterMeetupHandler: deregisterMeetupHandler,
                     deleteMeetupHandler: deleteMeetupHandler,
