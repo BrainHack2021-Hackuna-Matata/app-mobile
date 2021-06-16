@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 import '../../api/static.dart';
 import '../../models/meetup.dart';
-import '../../components/notifier.dart';
 import 'card/meetupCard.dart';
 import 'meetupCreatorScreen.dart';
 
