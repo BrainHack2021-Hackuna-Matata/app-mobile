@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import './mapMoreInfo.dart';
 import '../../api/static.dart';
 import 'package:intl/intl.dart';
+import './viewActiveCommit.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -50,8 +51,12 @@ class MapScreenState extends State<MapScreen> {
           '${a['owner']}',
           '${a['unit']}',
           'assets/purchase_default/groceries_default.jpg',
-          '${a['description']}'
-        ];
+          '${a['description']}',
+          '${a['id']}',
+          '${a['fulfilled']}',
+          '${a['accepted']}',
+          '${a['name']}',];
+
       }).toList();
       setState(() {
         markerData = md;
@@ -193,6 +198,7 @@ class MapScreenState extends State<MapScreen> {
                                       unit: markerData[selectedMarkerIndex][7],
                                       image: markerData[selectedMarkerIndex][8],
                                       details: markerData[selectedMarkerIndex][9],
+                                      
                                     )));
                       },
                 child: (selectedMarkerName == "No Location Selected")
@@ -210,16 +216,18 @@ class MapScreenState extends State<MapScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MapMoreInfo(
-                                      markerID: markerData[selectedMarkerIndex][0],
+                                builder: (context) => ViewActiveCommit(                    
                                       lat: markerData[selectedMarkerIndex][1],
-                                      lng: markerData[selectedMarkerIndex][2],
+                                      long: markerData[selectedMarkerIndex][2],
                                       blkNum: markerData[selectedMarkerIndex][3],
                                       helpNeeded: markerData[selectedMarkerIndex][4],
                                       dueDate: markerData[selectedMarkerIndex][5],
                                       unit: markerData[selectedMarkerIndex][7],
-                                      image: markerData[selectedMarkerIndex][8],
                                       details: markerData[selectedMarkerIndex][9],
+                                      id: markerData[selectedMarkerIndex][10],
+                                      fulfilled: markerData[selectedMarkerIndex][11],
+                                      accepted: markerData[selectedMarkerIndex][12],
+                                      name: markerData[selectedMarkerIndex][13],
                                     )));
                       },
                 child: (selectedMarkerName == "No Location Selected")

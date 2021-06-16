@@ -2,27 +2,29 @@ import 'package:flutter/material.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
 class ViewActivePurchase extends StatelessWidget {
+  final int id;
   final String blkNum;
   final String helpNeeded;
   final String dueDate; //use Time class?
   final String name;
   final String unit;
-  final String image;
   final String details;
   final bool accepted;
   final bool fulfilled;
+  
+  final Function refreshSplashScreen;
 
   ViewActivePurchase({
+    required this.id,
     required this.blkNum,
     required this.helpNeeded,
     required this.dueDate,
     required this.name,    
     required this.unit,
-    required this.image,
     required this.details,
     required this.accepted,
     required this.fulfilled,
-
+    required this.refreshSplashScreen,
   });
 
 Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
@@ -59,7 +61,7 @@ Widget fulfilledJellybean =  Text("Fulfilled",style: TextStyle(
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image), //////////TEMP DEBUG 
+                    image: AssetImage('assets/purchase_default/groceries_default.jpg'), //////////TEMP DEBUG 
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -195,7 +197,9 @@ Widget fulfilledJellybean =  Text("Fulfilled",style: TextStyle(
                               fontSize: 25,),),
                           actions: <Widget>[
                               TextButton(
-                              onPressed: () => Navigator.pop(context, 'Yes'), //////////////////TODO: actually delete request
+                              onPressed: () {Navigator.pop(context, 'Yes');
+                              },
+
                               child: const Text('Yes', style: TextStyle(
                               fontSize: 25,),),),
                               TextButton(
