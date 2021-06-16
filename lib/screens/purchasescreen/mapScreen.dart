@@ -84,7 +84,7 @@ class _MapScreenState extends State<MapScreen> {
             });
           }));
     }
-    ;
+
     return new Scaffold(
         appBar: AppBar(
           title: Text("Group Buy Requests"),
