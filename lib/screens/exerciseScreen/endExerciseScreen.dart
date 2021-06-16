@@ -32,19 +32,21 @@ class EndExerciseScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: ElevatedButton(
-                onPressed: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TabScreen(),
+                  onPressed: () => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TabScreen(),
+                      ),
+                      (route) => false),
+                  child: Text(
+                    'Back to home',
+                    style: TextStyle(
+                      fontSize: 30,
                     ),
-                    (route) => false),
-                child: Text(
-                  'Back to home',
-                  style: TextStyle(
-                    fontSize: 30,
                   ),
-                ),
-              ),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 70),
+                  )),
             ),
           ],
         ),

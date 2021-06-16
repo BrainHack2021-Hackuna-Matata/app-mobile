@@ -54,13 +54,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
                   title: const Text(
-                    'Cancellation',
+                    'Invalid Postal Code',
                     style: TextStyle(
                       fontSize: 25,
                     ),
                   ),
                   content: const Text(
-                    'Please ensure the postal code you have entered is a correct one.',
+                    'Please ensure that the postal code you have entered is a correct one.',
                     style: TextStyle(
                       fontSize: 25,
                     ),

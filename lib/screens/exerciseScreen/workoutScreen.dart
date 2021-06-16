@@ -1,4 +1,3 @@
-import 'package:eldertly_app/components/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
@@ -14,6 +13,7 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
+  bool _pop = false;
   var _exIndex = 0;
   final _exMap = {
     "arm": [
@@ -72,6 +72,52 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     ],
   };
 
+  void confirmpop(BuildContext context) {
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: const Text(
+                  'Confirm Quit Workout?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                content: const Text(
+                  'Are you sure you want to quit?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _pop = false;
+                      });
+                    },
+                    child: const Text(
+                      'No',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  )
+                ]));
+  }
+
   final CountdownController _controller = new CountdownController();
   // Type of exercise e.g.: arms
   String _exType = "";
@@ -93,50 +139,56 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       _exNum = widget.exList[_exIndex][1];
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Workout"),
-      ),
-      // show exercise and timer if within index
-      body: _exIndex < widget.exList.length
-          ? Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              //scaffold used to get the basic app styling
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 10),
-                    child:
-                        // Name of exercise
-                        Text(
-                      _exMap[_exType]?[_exNum]["name"] as String,
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        confirmpop(context);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("Workout"),
+        ),
+        // show exercise and timer if within index
+        body: _exIndex < widget.exList.length
+            ? Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                //scaffold used to get the basic app styling
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      child:
+                          // Name of exercise
+                          Text(
+                        _exMap[_exType]?[_exNum]["name"] as String,
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
 
-                  // Play gif
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: Image.asset(
-                      _exMap[_exType]?[_exNum]["file"] as String,
-                      width: MediaQuery.of(context).size.width * .9,
-                      height: MediaQuery.of(context).size.height * .5,
+                    // Play gif
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: Image.asset(
+                        _exMap[_exType]?[_exNum]["file"] as String,
+                        width: MediaQuery.of(context).size.width * .9,
+                        height: MediaQuery.of(context).size.height * .5,
+                      ),
                     ),
-                  ),
 
-                  // play/pause button
-                  TimerButton(_nextEx, _controller),
-                ],
-              ),
-            )
-          : EndExerciseScreen(),
+                    // play/pause button
+                    TimerButton(_nextEx, _controller),
+                  ],
+                ),
+              )
+            : EndExerciseScreen(),
+      ),
     );
   }
 }
