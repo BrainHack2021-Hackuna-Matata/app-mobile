@@ -23,6 +23,7 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     'location': '', //block
     'name' : '',
     //'coming' : '', //groupbuyer name
+    'owner' : -1,
     'due' : '',
     'fulfilled' : false,
     'accepted' : false,
@@ -42,6 +43,7 @@ class _MyFormState extends State<PurchaseCreatorForm> {
     formData['long'] = currentuser.long;
     formData['unit'] = currentuser.unit;
     formData['location'] = currentuser.block;
+    formData['owner'] = currentuser.id;
     super.didChangeDependencies();
   }
 

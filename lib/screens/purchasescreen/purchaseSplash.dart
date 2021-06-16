@@ -25,14 +25,15 @@ class _PurchaseSplashState extends State<PurchaseSplash> {
   }
 
   void _getCorrespondingScreen() async {
-    setState((){
-      screenToRender = "";
-      firstPost = {};
-    });
-    final int userId = Provider.of<UserNotifier>(context).currentUser.id;
+    // setState((){
+    //   screenToRender = "";
+    //   firstPost = {};
+    // });
+    final int userId = Provider.of<UserNotifier>(context, listen: false).currentUser.id;
     await http.get(Uri.parse('${Api.CURR_URL}/posts/user/$userId')).then((res) {
       Map<String, dynamic> body = jsonDecode(res.body);
       int length = body['length'];
+      print(body);
 
       setState(() {
         if (length == 0) {
