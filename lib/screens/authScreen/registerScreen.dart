@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../tabScreen.dart';
 import './authScreen.dart';
+import '../../api/static.dart';
 import '../../models/user.dart';
 import '../../components/notifier.dart';
 
@@ -21,8 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   double lat = 0.0;
   double long = 0.0;
-
   bool _notext = false;
+  bool _usertype = false;
 
   void register(UserNotifier user) async {
     if (mobileController.text == '' ||
@@ -54,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     };
     await http
         .post(
-      Uri.parse('http://10.0.2.2:8000/api/users'),
+      Uri.parse('${Api.CURR_URL}/users'),
       body: jsonEncode(
         data,
       ),
@@ -172,6 +173,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SizedBox(
+                        height: 70,
+                        child: ListTile(
+                          title: const Text('Elderly'),
+                          leading: Radio(
+                            value: false,
+                            groupValue: _usertype,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  _usertype = value as bool;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 70,
+                        child: ListTile(
+                          title: const Text('GroupBuyer'),
+                          leading: Radio(
+                            value: true,
+                            groupValue: _usertype,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  _usertype = value as bool;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Container(
                   height: 50,
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -183,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         primary: Colors.blue,
                         onPrimary: Colors.white,
                       ),
-                      child: Text('Login'),
+                      child: Text('Register'),
                       onPressed: () async => register(user),
                     );
                   }),

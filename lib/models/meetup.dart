@@ -5,16 +5,19 @@ class Meetup {
   final String location;
   final int capacity;
   final String imageurl;
-  final List<String> coming;
+  final DateTime date;
+  final List<dynamic> coming;
   final int owner;
-  const Meetup({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.location,
-    required this.capacity,
-    required this.imageurl,
-    required this.coming,
-    required this.owner,
-  });
+  final String hostname;
+  const Meetup(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.location,
+      required this.capacity,
+      required this.imageurl,
+      required this.date,
+      required this.coming,
+      required this.owner,
+      required this.hostname});
 }
