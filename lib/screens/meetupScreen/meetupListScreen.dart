@@ -15,9 +15,8 @@ class MeetupListScreen extends StatefulWidget {
   @override
   _MeetupListScreenState createState() => _MeetupListScreenState();
 }
-  List<dynamic> meetups = [];
 class _MeetupListScreenState extends State<MeetupListScreen> {
-  
+  List<dynamic> meetups = [];
 
   @override
   void initState() {
