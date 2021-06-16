@@ -33,9 +33,6 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
 
 
-  void selectExerciseHandler() {
-    //TODO pop dialogue screen to confirm and send it to
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +170,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                               "Accept",
                               style: TextStyle(fontSize: 30),
                             ),
-                            style: ElevatedButton.styleFrom(
+                             style: ElevatedButton.styleFrom( primary: Colors.red,
                               minimumSize: Size(250, 90),
                             ),
                           ),

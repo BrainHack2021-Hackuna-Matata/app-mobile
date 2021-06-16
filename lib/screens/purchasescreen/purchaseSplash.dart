@@ -5,6 +5,7 @@ import './purchaseCreatorForm.dart';
 import './checkActiveListing.dart';
 import './pendingPurchase.dart';
 import './viewActivePurchase.dart';
+import './viewActiveCommit.dart';
 
 class PurchaseSplash extends StatefulWidget {
   @override
@@ -47,6 +48,17 @@ class PurchaseSplashState extends State<PurchaseSplash> {
       primary: Colors.lightBlue, padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             onPressed: () {
             Navigator.push(context,
+            // MaterialPageRoute(builder: (context) => ViewActiveCommit(
+            //       blkNum: "123A",
+            //       helpNeeded: "Food Needed",
+            //       dueDate: "2021-06-16 13:57:23.100" ,
+            //       name: "Tan Ah Cow",
+            //       unit: "#02-22",
+            //       image: "assets/purchase_default/meal_default.jpg" ,
+            //       details: "rice with lao gan ma",
+            //       accepted: true,
+            //       fulfilled: false,
+            //     )),
             MaterialPageRoute(builder: (context) => MapScreen()),
   );
 },

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
 class MapMoreInfo extends StatelessWidget {
-  final String markerID;
+  final int markerID;
   final double lat;
   final double lng;
   final String blkNum;
@@ -32,10 +32,6 @@ Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
 Widget mealJellybean = Text("Meal Needed",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
 
-
-  void selectExerciseHandler() {
-    //TODO pop dialogue screen to confirm and send it to
-  }
 
   @override
   Widget build(BuildContext context) {

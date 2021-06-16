@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
-class ViewActivePurchase extends StatelessWidget {
+class ViewActiveCommit extends StatelessWidget {
   final String blkNum;
   final String helpNeeded;
   final String dueDate; //use Time class?
@@ -12,7 +12,7 @@ class ViewActivePurchase extends StatelessWidget {
   final bool accepted;
   final bool fulfilled;
 
-  ViewActivePurchase({
+  ViewActiveCommit({
     required this.blkNum,
     required this.helpNeeded,
     required this.dueDate,
@@ -86,6 +86,29 @@ Widget fulfilledJellybean =  Text("Fulfilled",style: TextStyle(
                     ),
                     Text(
                       "BLK $blkNum",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              ),
+            //////////////CHILD//////////////////////
+            //////////////CHILD//////////////////////
+              // Unit
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Unit: ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      unit,
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -179,39 +202,77 @@ Widget fulfilledJellybean =  Text("Fulfilled",style: TextStyle(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(10),
               ),
-                  Padding(
-                          padding: EdgeInsets.all(25),
-                          child: ElevatedButton(
-                              child: Text(
-                              "Cancel",
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            onPressed: (){showDialog<String>(
-                          context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                       title: const Text('Cancellation', style: TextStyle(
-                              fontSize: 25,),),
-                        content: const Text('Are you sure you want to cancel this request? It cannot be undone!', style: TextStyle(
-                              fontSize: 25,),),
-                          actions: <Widget>[
-                              TextButton(
-                              onPressed: () => Navigator.pop(context, 'Yes'), //////////////////TODO: actually delete request
-                              child: const Text('Yes', style: TextStyle(
-                              fontSize: 25,),),),
-                              TextButton(
-                              onPressed: () => Navigator.pop(context, 'No'),
-                              child: const Text('No', style: TextStyle(
-                              fontSize: 25,),),)
-                          ]
-                            ));
-                            
 
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(250, 90), primary: Colors.red
-                            ),
-                          ),
+                  Row(
+                    children: [
+                      Padding(
+                              padding: EdgeInsets.all(25),
+                              child: ElevatedButton(
+                                  child: Text(
+                                  "Cancel",
+                                  style: TextStyle(fontSize: 30),
+                                ),
+                                onPressed: (){showDialog<String>(
+                              context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                           title: const Text('Cancellation', style: TextStyle(
+                                  fontSize: 25,),),
+                            content: const Text('Are you sure you want to cancel this request? It cannot be undone!', style: TextStyle(
+                                  fontSize: 25,),),
+                              actions: <Widget>[
+                                  TextButton(
+                                  onPressed: () => Navigator.pop(context, 'Yes'), //////////////////TODO: actually delete request
+                                  child: const Text('Yes', style: TextStyle(
+                                  fontSize: 25,),),),
+                                  TextButton(
+                                  onPressed: () => Navigator.pop(context, 'No'),
+                                  child: const Text('No', style: TextStyle(
+                                  fontSize: 25,),),)
+                              ]
+                                ));
+                                
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(100, 90), primary: Colors.red
+                                ),
+                              ),
                 ),
+                 Padding(
+                              padding: EdgeInsets.all(25),
+                              child: ElevatedButton(
+                                  child: Text(
+                                  "Delivered",
+                                  style: TextStyle(fontSize: 30),
+                                ),
+                                onPressed: (){showDialog<String>(
+                              context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                           title: const Text('Confirmation', style: TextStyle(
+                                  fontSize: 25,),),
+                            content: const Text('Are you sure you have delivered this request? This cannot be undone!', style: TextStyle(
+                                  fontSize: 25,),),
+                              actions: <Widget>[
+                                  TextButton(
+                                  onPressed: () => Navigator.pop(context, 'Yes'), ////////////TODO set to fulfilled
+                                  child: const Text('Yes', style: TextStyle(
+                                  fontSize: 25,),),),
+                                  TextButton(
+                                  onPressed: () => Navigator.pop(context, 'No'),
+                                  child: const Text('No', style: TextStyle(
+                                  fontSize: 25,),),)
+                              ]
+                                ));
+                                
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(100, 90), primary: Colors.green
+                                ),
+                              ),
+                ),
+                    ],
+                  ),
               ],
              ),
         ),

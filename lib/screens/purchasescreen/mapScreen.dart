@@ -1,65 +1,102 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../../api/static.dart';
+import '../../models/post.dart';
+import '../../components/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import './mapMoreInfo.dart';
+import 'package:intl/intl.dart';
+
 
 
 class MapScreen extends StatefulWidget {
-  @override
+
   State<MapScreen> createState() => MapScreenState();
 }
 
 class MapScreenState extends State<MapScreen> {
   Completer<GoogleMapController> _controller = Completer();
+  List<dynamic> posts = [];
 
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+ void getData() async {
+    await http.get(Uri.parse('${Api.CURR_URL}/posts')).then((res) {
+      print(res.statusCode);
+      print(res.body);
+      List array = jsonDecode(res.body);
+      print(array);
+      var formattedArray = array.map((a) {
+        
+        return Post(
+          id :  int.parse(a["id"]),
+          title : a["title"],
+          description : a["description"],
+          location : a["location"],
+          items : a["items"],
+          imageurl : a["imageurl"],
+          coming : a["coming"],
+          owner : int.parse(a["owner"]),
+          created : DateTime.parse(a["created"]),
+          due : DateTime.parse(a["due"]),
+          fulfilled : a["fulfilled"],
+          accepted : a["accepted"],
+          lat : double.parse(a["lat"]),
+          long : double.parse(a["long"]),
+          unit : a["unit"],
+        );
+      
+      }).toList();
+      setState(() {
+        posts = formattedArray;
+      });
+    });
+  
+  }
+  
   Set<Marker> markers = Set();
   String selectedMarkerName = "No Location Selected";
   String selectedMarkerHelp = "";
   String selectedMarkerTime = "";
-  String selectedMarkerId = "";
   int selectedMarkerIndex = 0;
-
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(1.3711723846449548, 103.89066901142144),
     zoom: 16,
   );  
   
-List markerData = [["unique-marker1",1.3708473245253212, 103.8906930968424,"830A","Groceries Needed","17/06/21 8am",'Mr Tan',"#01-01", "assets/purchase_default/groceries_default.jpg",
-                  "I want the NTUC Sugar, then the salt must be the himalayan pink one ahh but the cheapest one that NTUC have because this one more expensive then also i need a new bottle of lao gan ma chilli but this one i think the ntuc here dont have can check if elsewhere have? this is my sons favourite and he is coming over for dinner on thursday I want to cook for him"],
-                  ["unique-marker2",1.3719248384562128, 103.88945871901747,"513","Groceries Needed","17/06/21 7am",'Mr Aziman',"#01-01", "assets/purchase_default/groceries_default.jpg",
-                  "I Ran out Of rice. Please help me to buy 1x Basmanthi rice. Any size will do. I do not want to Trouble you to carry it to my unit. Thank you very much."],
-                  ["unique-marker3",1.3714236478236796, 103.89026552566038,"831","Meal Needed","17/06/21 10am",'Mdm Chong',"#01-01", "assets/purchase_default/meal_default.jpg",
-                  "Cai Png, 1 egg, xiao bai cai and curry sauce"],];
-//markerID,lat,lng,Blk Num, Help Needed, Due Date, Name, Unit Number, Image, Details
+
 Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.blue[200] , color: Colors.blue[50] ));
 Widget mealJellybean = Text("Meal Needed",style: TextStyle(
-              fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
-          
+              fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));   
 
   @override
   Widget build(BuildContext context) {
-     for(var i=0;i<markerData.length;i++){
+     for(var i=0;i<posts.length;i++){
       markers.add(
       Marker(
-      markerId: MarkerId(markerData[i][0]),
-      position: LatLng(markerData[i][1], markerData[i][2]),
+      markerId: MarkerId(posts[i].id),
+      position: LatLng(posts[i].lat, posts[i].long),
       infoWindow: InfoWindow(
-        title: "BLK " + markerData[i][3],
-        snippet: markerData[i][4]
+        title: "BLK " + posts[i].location,
+        snippet: posts[i].title
       ),
       onTap:(){
-        setState((){selectedMarkerName = markerData[i][3];
-        selectedMarkerHelp = markerData[i][4];
-        selectedMarkerTime = markerData[i][5];
-        selectedMarkerId = markerData[i][0];
+        setState((){selectedMarkerName = posts[i].location;
+        selectedMarkerHelp = posts[i].title;
+        selectedMarkerTime = DateFormat('dd-MM-yyyy – kk:mm').format(posts[i].due);
         selectedMarkerIndex = i;
         });
       })
       );
-     }
-
+     };
     return new Scaffold(
       appBar: AppBar(
         title: Text("Group Buy Requests"),
@@ -101,16 +138,16 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                 ? null
                 : (){Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MapMoreInfo(
-                  markerID: markerData[selectedMarkerIndex][0],
-                  lat: markerData[selectedMarkerIndex][1] ,
-                  lng: markerData[selectedMarkerIndex][2],
-                  blkNum: markerData[selectedMarkerIndex][3] ,
-                  helpNeeded: markerData[selectedMarkerIndex][4],
-                  dueDate: markerData[selectedMarkerIndex][5] ,
-                  name: markerData[selectedMarkerIndex][6],
-                  unit: markerData[selectedMarkerIndex][7],
-                  image: markerData[selectedMarkerIndex][8] ,
-                  details: markerData[selectedMarkerIndex][9],
+                  markerID: posts[selectedMarkerIndex].id,
+                  lat: posts[selectedMarkerIndex].lat ,
+                  lng: posts[selectedMarkerIndex].long,
+                  blkNum: posts[selectedMarkerIndex].location ,
+                  helpNeeded: posts[selectedMarkerIndex].title,
+                  dueDate: posts[selectedMarkerIndex].due,
+                  name: "tan ah koo",
+                  unit: posts[selectedMarkerIndex].unit,
+                  image: posts[selectedMarkerIndex].imageurl ,
+                  details: posts[selectedMarkerIndex].description,
                 )));
                 },
                 child: (selectedMarkerName == "No Location Selected")
