@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
 class MapMoreInfo extends StatelessWidget {
-  final int markerID;
+  final String markerID;
   final double lat;
   final double lng;
   final String blkNum;
   final String helpNeeded;
   final String dueDate; //use Time class?
-  final String name;
   final String unit;
   final String image;
   final String details;
@@ -20,7 +20,6 @@ class MapMoreInfo extends StatelessWidget {
     required this.blkNum,
     required this.helpNeeded,
     required this.dueDate,
-    required this.name,    
     required this.unit,
     required this.image,
     required this.details,
@@ -102,7 +101,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                     Container(
                         child: 
                           Text(
-                            dueDate, /////////////////////////////////////to be changed to time format
+                            DateFormat('dd MMM – kk:mm').format(DateTime.parse(dueDate)), 
                             style: TextStyle(
                               fontSize: 20,
                             ),
@@ -111,30 +110,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                         ],
                       ),
                     ),
-              // Name
-              Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "Requestee: ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                        child: 
-                          Text(
-                            name,
-                            style: TextStyle(
-                              fontSize: 20,),
-                          ),
-                        ),
-                      ],
-                    ),      
-              ),
-              //Details
+              //
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),

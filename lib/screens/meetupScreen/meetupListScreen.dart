@@ -68,11 +68,6 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
           return MeetupCard(
             id: meetups[index].id,
             title: meetups[index].title,
-            imageurl: meetups[index].title == 'Chess'
-                ? 'assets/locations_meetup/chess.jpeg'
-                : meetups[index].title == 'Mahjong'
-                    ? 'assets/locations_meetup/mahjong.jpeg'
-                    : 'assets/locations_meetup/cards.jpeg',
             location: meetups[index].location,
             capacity: meetups[index].capacity,
             currentpax: meetups[index].coming.length,

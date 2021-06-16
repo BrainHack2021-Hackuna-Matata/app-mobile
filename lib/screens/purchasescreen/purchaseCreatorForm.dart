@@ -2,8 +2,8 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../components/notifier.dart';
+import '../../models/user.dart';
 import 'package:provider/provider.dart';
-import './submitPurchase.dart';
 
 class PurchaseCreatorForm extends StatefulWidget {
   final Function _submitForm;
@@ -18,13 +18,34 @@ class PurchaseCreatorForm extends StatefulWidget {
 class _MyFormState extends State<PurchaseCreatorForm> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> formData = {
-    'blkNum': '',
-    'type': '',
-    'dateTime': '',
-    'details' :'',
+    'title': '',
+    'description': '',
+    'location': '', //block
+    'name' : '',
+    //'coming' : '', //groupbuyer name
+    'due' : '',
+    'fulfilled' : false,
+    'accepted' : false,
+    'lat' : '', // 
+    'long' : '', //
+    'unit' : '',
   };
 
   var _dropdownOption = "Groceries Needed";
+
+@override
+  void didChangeDependencies() {
+    final User currentuser = Provider.of<UserNotifier>(context).currentUser;
+
+    formData['name'] = currentuser.name;
+    formData['lat'] = currentuser.lat;
+    formData['long'] = currentuser.long;
+    formData['unit'] = currentuser.unit;
+    formData['location'] = currentuser.block;
+    super.didChangeDependencies();
+  }
+
+
 
   String? _blkNumValidator(String? value) {
     if (value == null || value.isEmpty) {
@@ -65,14 +86,14 @@ class _MyFormState extends State<PurchaseCreatorForm> {
 
     if (formState!.validate()) {
       formState.save();
-      SubmitPurchase(user,formData['type'],formData['details'],formData['blkNum'],formData['dateTime']); ///settle arguments
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
       widget._submitForm(formData);
     }
     // Submit form API call
 
     // print(formData);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,15 +105,6 @@ class _MyFormState extends State<PurchaseCreatorForm> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            TextFormField(
-              validator: _blkNumValidator,
-              onSaved: (String? value) {
-                formData['blkNum'] = value;
-              },
-              decoration: InputDecoration(
-                labelText: "Block Number",
-              ),
-            ),
             DropdownButtonFormField<String>(
               items: ["Groceries Needed", "Meal Needed"].map((item) {
                 return DropdownMenuItem(child: Text(item), value: item);
@@ -104,7 +116,7 @@ class _MyFormState extends State<PurchaseCreatorForm> {
                 });
               },
               onSaved: (String? value) {
-                formData['type'] = value;
+                formData['title'] = value;
               },
               decoration: InputDecoration(labelText: "Type"),
             ),
@@ -124,14 +136,14 @@ class _MyFormState extends State<PurchaseCreatorForm> {
               },
               validator: _dateTimeValidator,
               onSaved: (DateTime? value) {
-                formData['dateTime'] = value!.toIso8601String();
+                formData['due'] = value!.toIso8601String();
               },
               decoration: InputDecoration(labelText: "Date and Time"),
             ),
             TextFormField(
               validator: _detailsValidator,
               onSaved: (String? value) {
-                formData['details'] = value;
+                formData['description'] = value;
               },
               decoration: InputDecoration(
                 labelText: "Details",
