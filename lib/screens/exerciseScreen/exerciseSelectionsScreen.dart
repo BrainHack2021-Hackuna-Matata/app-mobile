@@ -18,10 +18,10 @@ class _ExerciseSelectionsScreenState extends State<ExerciseSelectionsScreen> {
   late bool _ExercisesSelected;
 
   var exerciseTimes = [
-    "No Exercises Selected",
-    "5 Minutes",
-    "10 Minutes",
-    "15 Minutes"
+    "No Exercise Selected",
+    "3 Minutes",
+    "6 Minutes",
+    "9 Minutes"
   ];
   int selectedCount = 0;
 
