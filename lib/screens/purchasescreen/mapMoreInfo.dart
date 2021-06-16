@@ -25,17 +25,12 @@ class MapMoreInfo extends StatelessWidget {
     required this.details,
   });
 
-  Widget groceryJellybean = Text("Groceries Needed",
-      style: TextStyle(
-          fontSize: 36,
-          backgroundColor: Colors.blue[200],
-          color: Colors.blue[50]));
+Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.blue[200] , color: Colors.blue[50] ));
 
-  Widget mealJellybean = Text("Meal Needed",
-      style: TextStyle(
-          fontSize: 36,
-          backgroundColor: Colors.orange[200],
-          color: Colors.orange[50]));
+Widget mealJellybean = Text("Meal Needed",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +41,7 @@ class MapMoreInfo extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
+                  child: Column(
             children: <Widget>[
               // Help Type
               //////////////CHILD//////////////////////
@@ -55,7 +50,7 @@ class MapMoreInfo extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image), //////////TEMP DEBUG
+                    image: AssetImage(image), //////////TEMP DEBUG 
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -63,8 +58,8 @@ class MapMoreInfo extends StatelessWidget {
               //////////////CHILD//////////////////////
               Container(
                 child: (helpNeeded == "Groceries Needed")
-                    ? groceryJellybean
-                    : mealJellybean,
+                ? groceryJellybean
+                : mealJellybean,
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(10),
               ),
@@ -90,7 +85,7 @@ class MapMoreInfo extends StatelessWidget {
                 ),
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               ),
-              //////////////CHILD//////////////////////
+            //////////////CHILD//////////////////////
               // Due Date
               Container(
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -112,21 +107,22 @@ class MapMoreInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-
-
-                  
+                        ],
+                      ),
+                    ),
               //
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: Text(
-                  "Details: ",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: 
+                    Text(
+                      "Details: ",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,),
+
+                    ),
               ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -154,15 +150,10 @@ class MapMoreInfo extends StatelessWidget {
                             ),
                           ),
                 ),
-                  ],
-      
-              ),
-             
-                ),            
-            ]
-          ),
+              ],
+             ),
         ),
-      ),
-    );
+          ),
+        );
   }
 }
