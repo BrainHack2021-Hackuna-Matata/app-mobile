@@ -31,12 +31,6 @@ class MeetupCard extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MeetupDetailsScreen(
-          title: title,
-          imageurl: imageurl,
-          location: location,
-          capacity: capacity,
-          currentpax: currentpax,
-          attendees: attendees,
           id: id,
         ),
       ),
