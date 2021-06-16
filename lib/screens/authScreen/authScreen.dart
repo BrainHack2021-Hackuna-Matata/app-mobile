@@ -88,7 +88,10 @@ class _AuthScreenState extends State<AuthScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image(image: AssetImage('assets/icons/icon.png'), height: 50, width: 50),
+                Image(
+                    image: AssetImage('assets/icons/icon.png'),
+                    height: 50,
+                    width: 50),
                 Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(10),
@@ -141,10 +144,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     builder: (context, user, child) {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          
                           onPrimary: Colors.white,
                         ),
-                        child: Text('Continue'),
+                        child: Text('Continue',
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
                         onPressed: () async => clickLogin(user),
                       );
                     },

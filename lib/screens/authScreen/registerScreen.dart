@@ -271,7 +271,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: ElevatedButton.styleFrom(
                         onPrimary: Colors.white,
                       ),
-                      child: Text('Register'),
+                      child: Text('Register',
+                          style: TextStyle(
+                            fontSize: 20,
+                          )),
                       onPressed: () async => register(user),
                     );
                   }),
