@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 import '../../api/static.dart';
 import '../../models/meetup.dart';
-import '../../components/notifier.dart';
 import 'card/meetupCard.dart';
 import 'meetupCreatorScreen.dart';
 
@@ -15,7 +13,6 @@ class MeetupListScreen extends StatefulWidget {
   @override
   _MeetupListScreenState createState() => _MeetupListScreenState();
 }
-
 class _MeetupListScreenState extends State<MeetupListScreen> {
   List<dynamic> meetups = [];
 
@@ -43,37 +40,64 @@ class _MeetupListScreenState extends State<MeetupListScreen> {
       setState(() {
         meetups = formattedArray;
       });
+
     });
   }
 
   void handleRefresh() async {
     getData();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Updated Meetups!")));
   }
 
   void handleAdd() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AddMeetupScreen()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddMeetupScreen(),
+      ),
+    ).then((res) {
+      handleRefresh();
+    });
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Consumer<UserNotifier>(builder: (context, user, child) => Text(user.currentUser.mobile))),
-      body: ListView.builder(
-        //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
-        padding: const EdgeInsets.only(bottom: 200),
-        itemBuilder: (ctx, index) {
-          return MeetupCard(
-            id: meetups[index].id,
-            title: meetups[index].title,
-            location: meetups[index].location,
-            capacity: meetups[index].capacity,
-            currentpax: meetups[index].coming.length,
-            attendees: meetups[index].coming,
-            date: meetups[index].date,
-            hostname: meetups[index].hostname,
-          );
-        },
-        itemCount: meetups.length,
+      // appBar: AppBar(
+      //     title: Consumer<UserNotifier>(
+      //         builder: (context, user, child) =>
+      //             Text(user.currentUser.mobile))),
+      appBar: AppBar(
+        title: Text("Meetups"),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
+
+      body: meetups.length != 0
+          ? ListView.builder(
+              //Returns a card for each item in the meetups list (currently tagged to fakemeetups)
+              padding: const EdgeInsets.only(bottom: 200),
+              itemBuilder: (ctx, index) {
+                return MeetupCard(
+                  id: meetups[index].id,
+                  title: meetups[index].title,
+                  location: meetups[index].location,
+                  capacity: meetups[index].capacity,
+                  currentpax: meetups[index].coming.length,
+                  attendees: meetups[index].coming,
+                  date: meetups[index].date,
+                  hostname: meetups[index].hostname,
+                  getData: handleRefresh,
+                );
+              },
+              itemCount: meetups.length,
+            )
+          : Center(
+              child: Text(
+                "Loading meetups, please wait!",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
       //Adding two FloatingActionButtons into meetuplistscreen
       floatingActionButton: Stack(
         children: <Widget>[

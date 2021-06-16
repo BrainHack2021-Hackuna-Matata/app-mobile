@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
-class MapMoreInfo extends StatelessWidget {
+class PendingPurchase extends StatelessWidget {
   final String markerID;
   final double lat;
   final double lng;
   final String blkNum;
   final String helpNeeded;
   final String dueDate; //use Time class?
+  final String name;
   final String unit;
   final String image;
   final String details;
 
-  MapMoreInfo({
+  PendingPurchase({
     required this.markerID,
     required this.lat,
     required this.lng,
     required this.blkNum,
     required this.helpNeeded,
     required this.dueDate,
+    required this.name,    
     required this.unit,
     required this.image,
     required this.details,
@@ -30,6 +31,7 @@ Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
 
 Widget mealJellybean = Text("Meal Needed",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
+
 
 
   @override
@@ -101,7 +103,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                     Container(
                         child: 
                           Text(
-                            DateFormat('dd MMM – kk:mm').format(DateTime.parse(dueDate)), 
+                            dueDate, /////////////////////////////////////to be changed to time format
                             style: TextStyle(
                               fontSize: 20,
                             ),
@@ -110,7 +112,30 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                         ],
                       ),
                     ),
-              //
+              // Name
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Requestee: ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                        child: 
+                          Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 20,),
+                          ),
+                        ),
+                      ],
+                    ),      
+              ),
+              //Details
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -145,7 +170,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                               "Accept",
                               style: TextStyle(fontSize: 30),
                             ),
-                            style: ElevatedButton.styleFrom(
+                             style: ElevatedButton.styleFrom( primary: Colors.red,
                               minimumSize: Size(250, 90),
                             ),
                           ),

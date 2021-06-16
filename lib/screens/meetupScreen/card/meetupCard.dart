@@ -14,6 +14,7 @@ class MeetupCard extends StatelessWidget {
   final List attendees;
   final DateTime date;
   final String hostname;
+  final Function getData;
   MeetupCard({
     required this.id,
     required this.title,
@@ -23,22 +24,21 @@ class MeetupCard extends StatelessWidget {
     required this.attendees,
     required this.date,
     required this.hostname,
+    required this.getData,
   });
 
   void tapCard(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context)
+        .push(
       MaterialPageRoute(
         builder: (context) => MeetupDetailsScreen(
-          title: title,
-          imageurl: "assets/locations_meetup/${title.toLowerCase()}.jpeg",
-          location: location,
-          capacity: capacity,
-          currentpax: currentpax,
-          attendees: attendees,
           id: id,
         ),
       ),
-    );
+    )
+        .then((res) async {
+      getData();
+    });
   }
 
   final DateFormat formatter = DateFormat('dd MMM');
@@ -64,7 +64,8 @@ class MeetupCard extends StatelessWidget {
                       topRight: Radius.circular(15),
                     ),
                     child: Image(
-                      image: AssetImage("assets/locations_meetup/${title.toLowerCase()}.jpeg"),
+                      image: AssetImage(
+                          "assets/locations_meetup/${title.toLowerCase()}.jpeg"),
                       height: 250,
                       width: double.infinity,
                       fit: BoxFit.cover,

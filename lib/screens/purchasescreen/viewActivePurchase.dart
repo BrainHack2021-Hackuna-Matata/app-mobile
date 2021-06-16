@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 //markerID,lat,lng,Location Name, Help Needed, Due Date, Name, Unit Number, Image, Details
 
-class MapMoreInfo extends StatelessWidget {
-  final String markerID;
-  final double lat;
-  final double lng;
+class ViewActivePurchase extends StatelessWidget {
+  final int id;
   final String blkNum;
   final String helpNeeded;
   final String dueDate; //use Time class?
+  final String name;
   final String unit;
-  final String image;
   final String details;
+  final bool accepted;
+  final bool fulfilled;
+  
+  final Function refreshSplashScreen;
 
-  MapMoreInfo({
-    required this.markerID,
-    required this.lat,
-    required this.lng,
+  ViewActivePurchase({
+    required this.id,
     required this.blkNum,
     required this.helpNeeded,
     required this.dueDate,
+    required this.name,    
     required this.unit,
-    required this.image,
     required this.details,
+    required this.accepted,
+    required this.fulfilled,
+    required this.refreshSplashScreen,
   });
 
 Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
@@ -30,6 +32,15 @@ Widget groceryJellybean = Text("Groceries Needed",style: TextStyle(
 
 Widget mealJellybean = Text("Meal Needed",style: TextStyle(
               fontSize: 36, backgroundColor: Colors.orange[200] , color: Colors.orange[50] ));
+
+Widget waitingJellybean =  Text("Pending Accept",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.yellow[200] , color: Colors.black ));
+
+Widget acceptedJellybean =  Text("Accepted",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.green[200] , color: Colors.green[50] ));
+
+Widget fulfilledJellybean =  Text("Fulfilled",style: TextStyle(
+              fontSize: 36, backgroundColor: Colors.purple[200] , color: Colors.purple[50] ));
 
 
   @override
@@ -50,7 +61,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image), //////////TEMP DEBUG 
+                    image: AssetImage('assets/purchase_default/groceries_default.jpg'), //////////TEMP DEBUG 
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -101,7 +112,7 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                     Container(
                         child: 
                           Text(
-                            DateFormat('dd MMM – kk:mm').format(DateTime.parse(dueDate)), 
+                            dueDate, /////////////////////////////////////to be changed to time format
                             style: TextStyle(
                               fontSize: 20,
                             ),
@@ -110,7 +121,30 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                         ],
                       ),
                     ),
-              //
+              // Name
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Requestee: ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                        child: 
+                          Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 20,),
+                          ),
+                        ),
+                      ],
+                    ),      
+              ),
+              //Details
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -137,16 +171,48 @@ Widget mealJellybean = Text("Meal Needed",style: TextStyle(
                           ), 
 
                         ),
+                     //////////////CHILD//////////////////////
+              Container(
+                child: (accepted == true)
+                ? (fulfilled == true)
+                  ? fulfilledJellybean
+                  : acceptedJellybean
+                : waitingJellybean,
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.all(10),
+              ),
                   Padding(
                           padding: EdgeInsets.all(25),
                           child: ElevatedButton(
-                            onPressed: (){},
-                            child: Text(
-                              "Accept",
+                              child: Text(
+                              "Cancel",
                               style: TextStyle(fontSize: 30),
                             ),
+                            onPressed: (){showDialog<String>(
+                          context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                       title: const Text('Cancellation', style: TextStyle(
+                              fontSize: 25,),),
+                        content: const Text('Are you sure you want to cancel this request? It cannot be undone!', style: TextStyle(
+                              fontSize: 25,),),
+                          actions: <Widget>[
+                              TextButton(
+                              onPressed: () {Navigator.pop(context, 'Yes');
+                              },
+
+                              child: const Text('Yes', style: TextStyle(
+                              fontSize: 25,),),),
+                              TextButton(
+                              onPressed: () => Navigator.pop(context, 'No'),
+                              child: const Text('No', style: TextStyle(
+                              fontSize: 25,),),)
+                          ]
+                            ));
+                            
+
+                            },
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(250, 90),
+                              minimumSize: Size(250, 90), primary: Colors.red
                             ),
                           ),
                 ),

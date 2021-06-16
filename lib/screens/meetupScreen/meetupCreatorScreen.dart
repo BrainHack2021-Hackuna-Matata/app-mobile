@@ -11,27 +11,16 @@ class AddMeetupScreen extends StatefulWidget {
 }
 
 class _AddMeetupScreenState extends State<AddMeetupScreen> {
-  bool _postSuccessful = false;
-
-  void _postData(String jsonStringForm) async {
-    await http.post(Uri.parse("${Api.CURR_URL}/meetups"), body: jsonStringForm).then((res) {
-      setState(() {
-        _postSuccessful = true;
-      });
-    }).catchError((error) {
-      print(error);
-    });
-  }
 
   void _submitFormHandler(Map<String, dynamic> form) async {
-    _postData(jsonEncode(form));
+    String jsonStringForm = jsonEncode(form);
 
-    if (_postSuccessful) {
+    await http.post(Uri.parse("${Api.CURR_URL}/meetups"), body: jsonStringForm).then((res) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Submitted")));
       Future.delayed(Duration(seconds: 1), () => Navigator.pop(context));
-    } else {
+    }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("An error occurred, please try again later")));
-    }
+    });
   }
 
   @override

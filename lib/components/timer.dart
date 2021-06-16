@@ -29,7 +29,7 @@ class _TimerButtonState extends State<TimerButton> {
             padding: EdgeInsets.only(bottom: 5),
             child: Countdown(
               controller: widget.controller,
-              seconds: 3, //EDIT TIME HEREEEEEE
+              seconds: 59, //EDIT TIME HEREEEEEE
               interval: Duration(seconds: 1),
               build: (BuildContext context, double time) {
                 String tempTime = "";

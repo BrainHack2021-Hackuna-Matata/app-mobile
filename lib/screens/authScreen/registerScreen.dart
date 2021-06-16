@@ -24,13 +24,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   double long = 0.0;
   bool _notext = false;
   bool _usertype = false;
+  bool _postalerror = false;
 
   void register(UserNotifier user) async {
     if (mobileController.text == '' ||
         passwordController.text == '' ||
         postalController.text == '' ||
         nameController.text == '') {
-      _notext = true;
+      setState(() {
+        _notext = true;
+      });
       return;
     }
     await http
@@ -40,7 +43,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
       var data = jsonDecode(res.body);
       lat = double.parse(data['results'][0]['LATITUDE']);
       long = double.parse(data['results'][0]['LONGITUDE']);
+      setState(() {
+        _postalerror = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        _postalerror = true;
+      });
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                  title: const Text(
+                    'Invalid Postal Code',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                  ),
+                  content: const Text(
+                    'Please ensure that the postal code you have entered is a correct one.',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text(
+                        'OK',
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                      ),
+                    )
+                  ]));
     });
+    if (_postalerror) {
+      return;
+    }
     var data = {
       'name': nameController.text,
       'mobile': mobileController.text,
@@ -76,7 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         exp: r['exp'],
       );
       user.setUser(newUser);
-      Navigator.of(context).pushNamed(TabScreen.routeName);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
     });
   }
 
@@ -115,6 +155,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: TextField(
                     controller: mobileController,
                     decoration: InputDecoration(
+                      errorStyle: TextStyle(),
+                      errorText: _notext ? 'Please Key in all fields...' : null,
                       border: OutlineInputBorder(),
                       labelText: 'Mobile',
                     ),
@@ -129,6 +171,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     autocorrect: false,
                     controller: passwordController,
                     decoration: InputDecoration(
+                      errorStyle: TextStyle(),
+                      errorText: _notext ? 'Please Key in all fields...' : null,
                       border: OutlineInputBorder(),
                       labelText: 'Password',
                     ),
@@ -140,6 +184,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: TextField(
                     controller: nameController,
                     decoration: InputDecoration(
+                      errorStyle: TextStyle(),
+                      errorText: _notext ? 'Please Key in all fields...' : null,
                       border: OutlineInputBorder(),
                       labelText: 'Name',
                     ),
@@ -223,7 +269,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Consumer<UserNotifier>(builder: (context, user, child) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
                         onPrimary: Colors.white,
                       ),
                       child: Text('Register'),

@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/user.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'dart:convert';
+
 import '../../components/notifier.dart';
+import '../../api/static.dart';
+import '../../models/meetup.dart';
+import './card/detailRows.dart';
+import './buttons/registered.dart';
+import './buttons/newRegister.dart';
 
 class MeetupDetailsScreen extends StatefulWidget {
-  final String title;
-  final String imageurl;
-  final String location;
-  final int capacity;
-  final int currentpax;
-  final List attendees;
   final int id;
 
   MeetupDetailsScreen({
-    required this.title,
-    required this.imageurl,
-    required this.location,
-    required this.capacity,
-    required this.currentpax,
-    required this.attendees,
     required this.id,
   });
 
@@ -27,25 +23,226 @@ class MeetupDetailsScreen extends StatefulWidget {
 }
 
 class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
-  void selectMeetupHandler(
-      {required int id, required int currentpax, required List attendees}) {
-    //TODO pop dialogue screen to confirm and send it to
-    //Call api to update participants and current pax
+  //meetup details
+  Meetup md = Meetup(
+      capacity: 1,
+      coming: ["Loading"],
+      date: DateTime(2099, 12, 31),
+      hostname: "Loading",
+      id: -999,
+      location: "999999",
+      title: "LOADING",
+      owner: -999);
+
+  String userName = "";
+
+  int userID = -999;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
   }
 
   @override
+  void didChangeDependencies() {
+    userName = Provider.of<UserNotifier>(context).currentUser.name;
+    userID = Provider.of<UserNotifier>(context).currentUser.id;
+    super.didChangeDependencies();
+  }
+
+  void registerMeetupHandler(BuildContext context) async {
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: const Text(
+                  'Confirm Register?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                content: const Text(
+                  'Are you sure you want to register for this event?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      var newuser = [...md.coming, userName];
+                      await http
+                          .post(
+                        Uri.parse('${Api.CURR_URL}/meetups/${widget.id}'),
+                        body: jsonEncode(
+                          {
+                            'coming': newuser,
+                          },
+                        ),
+                      )
+                          .then((res) {
+                        print(res.body);
+                      });
+                      getData();
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text(
+                      'No',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  )
+                ]));
+  }
+
+  void deregisterMeetupHandler(BuildContext context) async {
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: const Text(
+                  'Confirm Unregister?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                content: const Text(
+                  'Are you sure you want to unregister for this event?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      var newuser =
+                          [...md.coming].where((i) => i != userName).toList();
+                      await http
+                          .post(
+                        Uri.parse('${Api.CURR_URL}/meetups/${widget.id}'),
+                        body: jsonEncode(
+                          {
+                            'coming': newuser,
+                          },
+                        ),
+                      )
+                          .then((res) {
+                        print(res.body);
+                      });
+                      getData();
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text(
+                      'No',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  )
+                ]));
+  }
+
+  void deleteMeetupHandler(BuildContext context) async {
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: const Text(
+                  'Confirm Delete?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                content: const Text(
+                  'Are you sure you want to delete this event?',
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.popUntil(
+                        context,
+                        ModalRoute.withName('/tabscreen'),
+                      );
+                      await http
+                          .delete(
+                        Uri.parse('${Api.CURR_URL}/meetups/${widget.id}'),
+                      )
+                          .then((res) {
+                        print(res.body);
+                      });
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text(
+                      'No',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  )
+                ]));
+  }
+
+  void getData() async {
+    await http
+        .get(Uri.parse('${Api.CURR_URL}/meetups/${widget.id}'))
+        .then((res) {
+      Map<String, dynamic> a = jsonDecode(res.body);
+      setState(() {
+        md = Meetup(
+          id: a['id'],
+          title: a['title'],
+          location: a['location'],
+          capacity: a['capacity'],
+          date: DateTime.parse(a['due']),
+          coming: a['coming'],
+          owner: a['owner'],
+          hostname: a['hostname'],
+        );
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
-    int blkNum = int.parse(widget.location.substring(3));
-    String registered =
-        widget.currentpax.toString() + "/" + widget.capacity.toString();
-
+    int numComing = md.coming.length;
+    int blkNum = int.parse(md.location.substring(3));
+    String numRegistered = numComing.toString() + "/" + md.capacity.toString();
     String attendeesName = "";
+    String eventDate = DateFormat('dd MMM').format(md.date);
+    String hostName = md.hostname;
 
-    for (int i = 0; i < widget.attendees.length - 1; i++) {
-      attendeesName += widget.attendees[i];
+    for (int i = 0; i < numComing - 1; i++) {
+      attendeesName += md.coming[i];
       attendeesName += ", ";
     }
-    attendeesName += widget.attendees[widget.attendees.length - 1];
+    attendeesName += md.coming[numComing - 1];
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,20 +251,66 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
       body: Center(
         child: Column(
           children: <Widget>[
-            // Block
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(widget.imageurl),
-                  fit: BoxFit.fitWidth,
+            // Image
+            Stack(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/locations_meetup/${md.title.toLowerCase()}.jpeg"),
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 20,
+                  right: 10,
+                  child: md.hostname == userName
+                      ? Container(
+                          width: 250,
+                          color: Colors.blue,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 20,
+                          ),
+                          child: Text(
+                            'My Meetup!',
+                            style: TextStyle(
+                              fontSize: 36,
+                              color: Colors.white,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
+                          ),
+                        )
+                      : md.coming.contains(userName)
+                          ? Container(
+                              width: 250,
+                              color: Colors.green,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 20,
+                              ),
+                              child: Text(
+                                'Attending!',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  color: Colors.white,
+                                ),
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
+                              ),
+                            )
+                          : Container(),
+                )
+              ],
             ),
             Container(
               child: Text(
-                widget.title,
+                md.title,
                 style: TextStyle(
                   fontSize: 36,
                 ),
@@ -76,51 +319,13 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
               padding: EdgeInsets.all(10),
             ),
 
-            // Location Row
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "Address: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "BLK $blkNum",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-            ),
             // Current Pax/Registered
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "Participant Count: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    registered,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: widget.capacity == widget.currentpax
-                          ? Colors.red
-                          : Colors.black,
-                    ),
-                  )
-                ],
-              ),
+            DetailRows(
+              "Participant Count: ",
+              numRegistered,
+              md.capacity == numComing ? Colors.red : Colors.black,
             ),
+
             // Names of people attending Row
             Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -143,49 +348,44 @@ class _MeetupDetailsScreenState extends State<MeetupDetailsScreen> {
               ),
             ),
 
-            widget.currentpax < widget.capacity
-                ? Padding(
-                    padding: EdgeInsets.all(25),
-                    child: ElevatedButton(
-                      onPressed: () => selectMeetupHandler(
-                          id: widget.id,
-                          attendees: widget.attendees,
-                          currentpax: widget.currentpax),
-                      child: Text(
-                        "Join Meetup",
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(250, 90),
-                      ),
-                    ),
+            // Location Row
+            DetailRows(
+              "Address: ",
+              "BLK $blkNum",
+            ),
+
+            DetailRows(
+              "Date of Event: ",
+              eventDate,
+            ),
+
+            DetailRows(
+              "Name of Host: ",
+              hostName.length > 15
+                  ? hostName.replaceRange(14, hostName.length, '...')
+                  : hostName,
+            ),
+
+            md.coming.contains(userName)
+                ? Registered(
+                    id: widget.id,
+                    userID: userID,
+                    userName: userName,
+                    numComing: numComing,
+                    owner: md.owner,
+                    attendees: md.coming,
+                    deregisterMeetupHandler: deregisterMeetupHandler,
+                    deleteMeetupHandler: deleteMeetupHandler,
+                    hostname: hostName,
                   )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(25),
-                        child: ElevatedButton(
-                          onPressed: null,
-                          child: Text(
-                            "Meetup FULL",
-                            style: TextStyle(fontSize: 30),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(250, 90),
-                          ),
-                        ),
-                      ),
-                      Text("Go back and choose another meetup!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ))
-                    ],
-                  )
+                : NewRegister(
+                    id: widget.id,
+                    userName: userName,
+                    numComing: numComing,
+                    capacity: md.capacity,
+                    attendees: md.coming,
+                    registerMeetupHandler: registerMeetupHandler,
+                  ),
           ],
         ),
       ),
