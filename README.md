@@ -12,8 +12,8 @@ This is done in 3 ways:
 
 ## Technology
 
-- Frontend: Flutter and Dart
-- Backend: Django REST hosted on Heroku
+- Front-end: Flutter and Dart
+- Back-end: Django REST hosted on Heroku
 - Database: PostgreSQL
 
 Architected and created a fully functional REST framework, with features such as cookie-based authentication.
@@ -34,4 +34,4 @@ Member | Role
 
 ## Miscellaneous
 
-[Backend Repository](https://github.com/BrainHack2021-Hackuna-Matata/app-api)
+[Back-end Repository](https://github.com/BrainHack2021-Hackuna-Matata/app-api)
