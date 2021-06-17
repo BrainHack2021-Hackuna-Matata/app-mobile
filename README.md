@@ -31,3 +31,7 @@ Member | Role
 [Ng Ho Chi](https://github.com/nghochi123) | Development Team Lead
 [Oh Yu Xiang](https://github.com/twoeasy3) | Front-end Developer
 [Teoh Xu En](https://github.com/teohxuen) | Front-end Developer
+
+## Miscellaneous
+
+[Backend Repository](https://github.com/BrainHack2021-Hackuna-Matata/app-api)
