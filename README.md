@@ -24,8 +24,10 @@ Built a functional mobile app with integrations to Google Maps and features a gl
 
 ## [The Team](https://github.com/orgs/BrainHack2021-Hackuna-Matata/)
 
-- [Andrew Tan Wenjie](https://github.com/Ahndrayo)
-- [Chen Xihao](https://github.com/howtoosee)
-- [Ng Ho Chi](https://github.com/nghochi123)
-- [Oh Yu Xiang](https://github.com/twoeasy3)
-- [Teoh Xu En](https://github.com/teohxuen)
+Member | Role
+------ | ----
+[Andrew Tan Wenjie](https://github.com/Ahndrayo) | Product Manager 
+[Chen Xihao](https://github.com/howtoosee) | Full-stack Developer
+[Ng Ho Chi](https://github.com/nghochi123) | Development Team Lead
+[Oh Yu Xiang](https://github.com/twoeasy3) | Front-end Developer
+[Teoh Xu En](https://github.com/teohxuen) | Front-end Developer
